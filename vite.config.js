@@ -7,4 +7,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  base: '/SHOHAM/', // שם הריפוזיטורי שלך בגיטהאב - חייב להיות מדויק!
 })
