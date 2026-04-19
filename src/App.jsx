@@ -368,40 +368,60 @@ const App = () => {
         if (!Recognition) return alert("הדפדפן לא תומך בזיהוי קולי.");
         const rec = new Recognition();
         rec.lang = 'en-US';
+        rec.continuous = false;
+        rec.interimResults = false;
+        rec.maxAlternatives = 1;
         isProcessingRef.current = false;
-        
+
         rec.onstart = () => setIsListening(true);
-        rec.onend = () => setIsListening(false);
-        
+
+        rec.onend = () => {
+            setIsListening(false);
+            isProcessingRef.current = false;
+        };
+
+        rec.onerror = (e) => {
+            setIsListening(false);
+            isProcessingRef.current = false;
+            if (e.error === 'no-speech') {
+                setFeedback({ type: 'error', message: 'לא שמעתי כלום, נסי שוב 🎤' });
+            } else if (e.error === 'not-allowed') {
+                setFeedback({ type: 'error', message: 'נא לאשר גישה למיקרופון בדפדפן.' });
+            } else {
+                setFeedback({ type: 'error', message: 'שגיאת מיקרופון, נסי שוב.' });
+            }
+            setTimeout(() => setFeedback(null), 2500);
+        };
+
         rec.onresult = (e) => {
             if (isProcessingRef.current) return;
             const transcript = e.results[0][0].transcript.toLowerCase().trim();
             const target = currentWord.en.toLowerCase().replace(/^to\s+/, "").trim();
-            
+
             if (transcript.includes(target) || transcript === target) {
                 isProcessingRef.current = true;
                 setFeedback({ type: 'success', message: `מעולה! זיהיתי "${transcript}"` });
                 playSound('success');
                 triggerAnimation('success-check');
-                
+
                 setMasteredIndexes(prevMastered => {
                     const nextMastered = prevMastered.includes(activeWordIndex) ? prevMastered : [...prevMastered, activeWordIndex];
-                    
+
                     setTimeout(() => {
                         const unmastered = wordsData.map((_, i) => i).filter(i => !nextMastered.includes(i));
-                        
+
                         if (unmastered.length > 0) {
                             const randomNextIdx = unmastered[Math.floor(Math.random() * unmastered.length)];
                             setActiveWordIndex(randomNextIdx);
                         } else {
                             setFeedback({ type: 'success', message: "אלופה! סיימת את כל המאגר!" });
                         }
-                        
+
                         setStep(1);
                         setFeedback(null);
                         isProcessingRef.current = false;
                     }, 1800);
-                    
+
                     return nextMastered;
                 });
             } else {
@@ -409,7 +429,14 @@ const App = () => {
                 playSound('error');
             }
         };
-        rec.start();
+
+        try {
+            rec.start();
+        } catch (e) {
+            setIsListening(false);
+            setFeedback({ type: 'error', message: 'לא ניתן להפעיל מיקרופון, נסי שוב.' });
+            setTimeout(() => setFeedback(null), 2500);
+        }
     };
 
     const checkTranslation = (he) => {
