@@ -1,62 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// --- 100 Words Master Database (Level: 6th-7th Grade) ---
+// --- Advanced 7th-8th Grade Words ---
 const wordsData = [
-    // Basics & Adjectives
-    { en: "Always", he: "תמיד" }, { en: "Sometimes", he: "לפעמים" }, { en: "Never", he: "אף פעם" },
-    { en: "Happy", he: "שמח" }, { en: "Sad", he: "עצוב" }, { en: "Angry", he: "כועס" },
-    { en: "Tired", he: "עייף" }, { en: "Big", he: "גדול" }, { en: "Small", he: "קטן" },
-    { en: "Fast", he: "מהיר" }, { en: "Slow", he: "איטי" }, { en: "Good", he: "טוב" },
-    { en: "Bad", he: "רע" }, { en: "Beautiful", he: "יפה" }, { en: "Ugly", he: "מכוער" },
-    { en: "New", he: "חדש" }, { en: "Old", he: "ישן/זקן" }, { en: "Clean", he: "נקי" },
-    { en: "Dirty", he: "מלוכלך" }, { en: "Hot", he: "חם" }, { en: "Cold", he: "קר" },
-    
-    // Verbs
-    { en: "Play", he: "לשחק" }, { en: "Jump", he: "לקפוץ" }, { en: "Run", he: "לרוץ" },
-    { en: "Sleep", he: "לישון" }, { en: "Eat", he: "לאכול" }, { en: "Drink", he: "לשתות" },
-    { en: "Read", he: "לקרוא" }, { en: "Write", he: "לכתוב" }, { en: "Listen", he: "להקשיב" },
-    { en: "Speak", he: "לדבר" }, { en: "Open", he: "לפתוח" }, { en: "Close", he: "לסגור" },
-    { en: "Buy", he: "לקנות" }, { en: "Sell", he: "למכור" }, { en: "Give", he: "לתת" },
-    { en: "Take", he: "לקחת" }, { en: "Help", he: "לעזור" }, { en: "Love", he: "לאהוב" },
-    
-    // School & Items
-    { en: "School", he: "בית ספר" }, { en: "Teacher", he: "מורה" }, { en: "Student", he: "תלמיד" },
-    { en: "Book", he: "ספר" }, { en: "Pen", he: "עט" }, { en: "Pencil", he: "עיפרון" },
-    { en: "Bag", he: "תיק" }, { en: "Chair", he: "כיסא" }, { en: "Table", he: "שולחן" },
-    { en: "Classroom", he: "כיתה" }, { en: "Picture", he: "תמונה" }, { en: "Test", he: "מבחן" },
-    
-    // Animals
-    { en: "Dog", he: "כלב" }, { en: "Cat", he: "חתול" }, { en: "Bird", he: "ציפור" },
-    { en: "Fish", he: "דג" }, { en: "Horse", he: "סוס" }, { en: "Mouse", he: "עכבר" },
-    { en: "Cow", he: "פרה" }, { en: "Elephant", he: "פיל" }, { en: "Monkey", he: "קוף" },
-    { en: "Lion", he: "אריה" },
-    
-    // Food
-    { en: "Apple", he: "תפוח" }, { en: "Banana", he: "בננה" }, { en: "Bread", he: "לחם" },
-    { en: "Water", he: "מים" }, { en: "Milk", he: "חלב" }, { en: "Cake", he: "עוגה" },
-    { en: "Pizza", he: "פיצה" }, { en: "Orange", he: "תפוז/כתום" }, { en: "Cheese", he: "גבינה" },
-    
-    // People & Family
-    { en: "Boy", he: "ילד" }, { en: "Girl", he: "ילדה" }, { en: "Man", he: "איש" },
-    { en: "Woman", he: "אישה" }, { en: "Baby", he: "תינוק" }, { en: "Mother", he: "אמא" },
-    { en: "Father", he: "אבא" }, { en: "Brother", he: "אח" }, { en: "Sister", he: "אחות" },
-    { en: "Friend", he: "חבר" },
-    
-    // Body Parts
-    { en: "Head", he: "ראש" }, { en: "Eye", he: "עין" }, { en: "Ear", he: "אוזן" },
-    { en: "Nose", he: "אף" }, { en: "Mouth", he: "פה" }, { en: "Hand", he: "יד" },
-    { en: "Foot", he: "כף רגל" },
-    
-    // Colors
-    { en: "Red", he: "אדום" }, { en: "Blue", he: "כחול" }, { en: "Yellow", he: "צהוב" },
-    { en: "Green", he: "ירוק" }, { en: "Pink", he: "ורוד" }, { en: "Purple", he: "סגול" },
-    { en: "Black", he: "שחור" }, { en: "White", he: "לבן" }, { en: "Brown", he: "חום" },
-    
-    // Nature & Time
-    { en: "Sun", he: "שמש" }, { en: "Moon", he: "ירח" }, { en: "Star", he: "כוכב" },
-    { en: "Tree", he: "עץ" }, { en: "Flower", he: "פרח" }, { en: "Rain", he: "גשם" },
-    { en: "Snow", he: "שלג" }, { en: "Morning", he: "בוקר" }, { en: "Night", he: "לילה" },
-    { en: "Day", he: "יום" }
+  // Phrasal Verbs
+  { en: "Give up", he: "להתייאש / להשתמט" },
+  { en: "Look forward to", he: "ציפייה לקידום / תקווה" },
+  { en: "Put off", he: "לדחות / להתנגד" },
+  { en: "Carry on", he: "להמשיך / לעמוד בעמדה" },
+  { en: "Come across", he: "להיתקל בו / להימצא" },
+  { en: "Figure out", he: "להבין / לחשוב" },
+  { en: "Break down", he: "להתנתק / להישבר" },
+  { en: "Bring up", he: "להעלות / לגדל" },
+
+  // Connectors & Abstract Concepts
+  { en: "Although", he: "אף על פי שלא" },
+  { en: "However", he: "עם זאת" },
+  { en: "Therefore", he: "לכן / בגלל זה" },
+  { en: "Meanwhile", he: "בינתיים / באותו זמן" },
+  { en: "Eventually", he: "בסוף / בסופו של דבר" },
+  { en: "Opportunity", he: "הזדמנות" },
+  { en: "Essential", he: "חיוני / הכרחי" },
+  { en: "Achieve", he: "להשיג / לעלות" },
+
+  // Complex Adjectives & Verbs
+  { en: "Persistent", he: "עקשן / ניצור" },
+  { en: "Vulnerable", he: "חלוש / בסכנה" },
+  { en: "Resilient", he: "חוסן / יכול להתאושש" },
+  { en: "Ambitious", he: "שאפתני" },
+  { en: "Contemplate", he: "לחשוב בעמוקות" },
+  { en: "Acknowledge", he: "להודות / להכיר" },
+  { en: "Persevere", he: "להמשיך להשתדל" },
+  { en: "Accomplish", he: "להשלים / להגשים" },
+  { en: "Determine", he: "להחליט / לקבוע" },
+  { en: "Remarkable", he: "ראוי להערה / מעניין" },
+  { en: "Reluctant", he: "לא רוצה / סרוג" },
+  { en: "Profound", he: "עמוק / משמעותי" },
+  { en: "Inevitable", he: "בלתי נמנע" },
+  { en: "Advocate", he: "לתמוך בעד / תומך" },
+  { en: "Meticulous", he: "זהיר מאוד / מדויק" },
+  { en: "Perceive", he: "להבחין / להרגיש" },
+  { en: "Flourish", he: "לשגשג / להתפתח" },
+  { en: "Compromise", he: "פשרה / להסכים" },
+  { en: "Reluctance", he: "אי-רצון / קושי" },
+  { en: "Diligent", he: "חרוץ / שקדן" }
 ];
 
 // --- Builder Data (6th-7th Grade) ---
@@ -517,11 +503,11 @@ const App = () => {
 
     // --- UI Components ---
     const NavBtn = ({ icon, text, targetView, action }) => (
-        <button 
-            onClick={() => { if(action) action(); else setView(targetView); }} 
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all shadow-sm border border-transparent ${view === targetView || (view.startsWith('quiz') && targetView==='quiz') ? 'bg-pink-500 text-white shadow-md scale-105 border-pink-600' : 'bg-white text-slate-700 hover:bg-pink-50 hover:text-pink-600 hover:border-pink-200'}`}
+        <button
+            onClick={() => { if(action) action(); else setView(targetView); }}
+            className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border border-transparent ${view === targetView || (view.startsWith('quiz') && targetView==='quiz') ? 'bg-pink-500 text-white shadow-md scale-105 border-pink-600' : 'bg-white text-slate-700 hover:bg-pink-50 hover:text-pink-600 hover:border-pink-200'}`}
         >
-            <span>{icon}</span> <span>{text}</span>
+            <span className="text-sm sm:text-base">{icon}</span> <span className="hidden sm:inline">{text}</span>
         </button>
     );
 
