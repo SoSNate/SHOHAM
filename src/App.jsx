@@ -84,7 +84,11 @@ const analogiesData = [
     { word1: "Optimism", word2: "Hope", relation: "רגשות מופשטים דומים", word3: "Courage", options: ["Fear", "Strength", "Wisdom", "Doubt"], correct: "Strength" },
     { word1: "Author", word2: "Novel", relation: "יוצר ויצירה", word3: "Composer", options: ["Song", "Music", "Orchestra", "Symphony"], correct: "Symphony" },
     { word1: "Reluctance", word2: "Hesitation", relation: "תחושות דומות", word3: "Perseverance", options: ["Weakness", "Confidence", "Determination", "Doubt"], correct: "Determination" },
-    { word1: "Root", word2: "Tree", relation: "חלק מכל", word3: "Page", options: ["Book", "Paper", "Ink", "Cover"], correct: "Book" }
+    { word1: "Root", word2: "Tree", relation: "חלק מכל", word3: "Page", options: ["Book", "Paper", "Ink", "Cover"], correct: "Book" },
+    { word1: "Triumph", word2: "Victory", relation: "מילים דומות במשמעות", word3: "Struggle", options: ["Effort", "Challenge", "Defeat", "Pain"], correct: "Defeat" },
+    { word1: "Fragile", word2: "Resilient", relation: "הפכים בחוזק", word3: "Ignorant", options: ["Knowledgeable", "Wise", "Smart", "Educated"], correct: "Knowledgeable" },
+    { word1: "Mentor", word2: "Student", relation: "יחסי כוח ולמידה", word3: "Employer", options: ["Employee", "Boss", "Manager", "Owner"], correct: "Employee" },
+    { word1: "Persevere", word2: "Quit", relation: "הפכים בהתמדה", word3: "Embrace", options: ["Reject", "Accept", "Adopt", "Welcome"], correct: "Reject" }
 ];
 
 // --- Sentence Completion Data (Advanced 7th-8th Grade Context-Heavy) ---
@@ -102,7 +106,11 @@ const completionData = [
 
     // Advanced completions
     { sentence: "Despite her initial _______, she eventually found confidence speaking in public.", options: ["enthusiasm", "trepidation", "joy", "knowledge"], correct: "trepidation" },
-    { sentence: "His _______ attitude about climate change contradicts the scientific evidence.", options: ["concerned", "optimistic", "dismissive", "passionate"], correct: "dismissive" }
+    { sentence: "His _______ attitude about climate change contradicts the scientific evidence.", options: ["concerned", "optimistic", "dismissive", "passionate"], correct: "dismissive" },
+    { sentence: "The _______ scientist refused to _______ her findings even when facing intense criticism from peers.", options: ["hesitant", "determined abandon", "timid", "reluctant"], correct: "determined abandon" },
+    { sentence: "Her _______ approach to research, combined with her _______ to detail, earned her international recognition.", options: ["careless", "meticulous rigorous", "sloppy", "casual"], correct: "meticulous rigorous" },
+    { sentence: "The committee had to _______ that their initial _______ was based on incomplete data.", options: ["deny", "acknowledge misunderstanding", "reject", "ignore"], correct: "acknowledge misunderstanding" },
+    { sentence: "His _______ behavior throughout the conflict _______ his colleagues, who expected him to take a stronger stance.", options: ["bold", "reluctant disappointed", "aggressive", "determined"], correct: "reluctant disappointed" }
 ];
 
 // --- Verbs & Tenses Data (Comprehensive Advanced) ---
@@ -212,40 +220,40 @@ const verbsData = [
 // Format: [[Word|Hebrew Translation|Hebrew Pronunciation|StyleCategory]]
 const storiesData = [
     {
-        title: "A Good Book 📖",
+        title: "The Power of Words 📚",
         content: [
-            "[[Shoham|שוהם|שוהם|learned]] [[always|תמיד|אלווייז|learned]] likes to [[read|לקרוא|ריד|learned]] a [[good|טוב|גוד|learned]] [[book|ספר|בוק|learned]].",
-            "One [[morning|בוקר|מורנינג|learned]], she goes to the [[library|ספרייה|לייבררי|new]] to find a [[new|חדש|ניו|learned]] [[story|סיפור|סטורי|learned]]. She sits on a [[chair|כיסא|צ'ייר|learned]] and [[listens|מקשיבה|ליסנס|learned]] to the [[quiet|שקט|קווייט|new]] room.",
-            "It is a very [[beautiful|יפה|ביוטיפול|learned]] [[day|יום|דיי|learned]]!"
+            "Shoham had always been [[reluctant|לא רוצה|רילוקטנט|new]] to [[advocate|לתמוך בעד|אדוקיט|new]] for her own [[ideas|רעיונות|אידיאס|new]]. Her [[profound|עמוק|פרופאונד|new]] [[thoughts|מחשבות|תאטס|new]] remained hidden inside, locked away by [[fear|פחד|פיר|learned]].",
+            "One [[day|יום|דיי|learned]], her [[teacher|מורה|טיצ'ר|new]] asked her to [[determine|להחליט|דיטרמיין|learned]] the [[meaning|משמעות|מינינג|new]] of a complex [[poem|שיר|פוואם|new]]. When she [[hesitate|היססה|הזיטיט|new]], the [[teacher|מורה|טיצ'ר|new]] [[perceive|הבחין|פרסיווו|learned]] her [[vulnerability|חולשה|וולנרביליטי|new]]: 'Your [[silence|שקט|סיילנס|new]] shows you're [[contemplating|חושבת|קונטמפליטינג|learned]] deeply.'",
+            "Slowly, Shoham began to [[acknowledge|להודות|אקנאלדג'|learned]] that her [[reluctance|אי-רצון|רילוקטנס|new]] was really [[fear|פחד|פיר|learned]] of [[judgment|שיפוט|ג'אדג'מנט|new]]. But her [[perseverance|התמדה|פרסיוורנס|new]] to [[overcome|להתגבר על|אוברקום|new]] it ultimately helped her [[flourish|לשגשג|פלוריש|learned]]."
         ],
-        audio: "Shoham always likes to read a good book. One morning, she goes to the library to find a new story. She sits on a chair and listens to the quiet room. It is a very beautiful day!"
+        audio: "Shoham had always been reluctant to advocate for her own ideas. Her profound thoughts remained hidden inside, locked away by fear. One day, her teacher asked her to determine the meaning of a complex poem. When she hesitated, the teacher perceived her vulnerability: Your silence shows you're contemplating deeply. Slowly, Shoham began to acknowledge that her reluctance was really fear of judgment. But her perseverance to overcome it ultimately helped her flourish."
     },
     {
-        title: "A Trip to the Park 🌳",
+        title: "Breaking Stereotypes 💪",
         content: [
-            "It is a [[beautiful|יפה|ביוטיפול|learned]] [[day|יום|דיי|learned]]. Shoham and her [[mother|אמא|מאת'ר|learned]] walk to the [[park|פארק|פארק|new]]. The [[sun|שמש|סאן|learned]] is [[yellow|צהוב|יילו|learned]] and [[hot|חם|הוט|learned]].",
-            "Shoham sees a [[small|קטן|סמול|learned]] [[bird|ציפור|בירד|learned]] in a [[tree|עץ|טרי|learned]]. The bird is [[blue|כחול|בלו|learned]]. She also sees a [[black|שחור|בלאק|learned]] [[cat|חתול|קאט|learned]] [[under|מתחת|אנדר|learned]] a [[table|שולחן|טייבל|learned]].",
-            "They sit on a [[chair|כיסא|צ'ייר|learned]] and [[eat|אוכלים|איט|learned]] a [[pizza|פיצה|פיצה|learned]]. It is very [[good|טוב|גוד|learned]]! Shoham [[loves|אוהבת|לאבס|learned]] the park."
+            "Everyone [[assume|הניחו|אסיום|new]] Shoham [[couldn't|לא יכלה|קודנט|new]] excel at [[math|מתמטיקה|מאט|new]] because she [[always|תמיד|אלווייז|learned]] [[struggled|התקשתה|סטראגלד|new]] with [[numbers|מספרים|נאמברס|new]]. Her [[peers|עמיתים|פיירס|new]] even [[perceive|ראו|פרסיווו|learned]] her as [[vulnerable|חלוש|וולנרראבל|new]] in [[academic|אקדמי|אקידימיק|new]] [[settings|מצבים|סטינגס|new]].",
+            "But Shoham [[determine|החליטה|דיטרמיינד|learned]] to [[challenge|לאתגר|צ'אלנג'|new]] their [[assumption|הנחה|אסמשן|new]]. She [[persevere|התמדה|פרסיווור|learned]] through [[frustration|תסכול|פרוסטריישן|new]] and [[contemplate|חשבה|קונטמפליטד|learned]] new [[strategies|אסטרטגיות|סטראטג'יז|new]]. Her [[meticulous|זהיר מאוד|מטיקיולוס|new]] [[approach|גישה|אפרוץ'|new]] began to [[flourish|שגשג|פלוריש|learned]].",
+            "When she finally [[accomplish|השלימה|אקומפליש|learned]] a [[remarkable|ראוי להערה|רימארקאבל|new]] [[score|ציון|סקור|new]], her [[classmates|תלמידים|קלאסמייטס|new]] [[acknowledge|הודו|אקנאלדג'|learned]] her [[resilience|חוסני|רזיליאנס|new]]. She had [[prove|הוכיחה|פרוווו|learned]] that [[stereotype|סטריאוטיפ|סטריאוטייפ|new]] are just obstacles to [[overcome|להתגבר על|אוברקום|new]]."
         ],
-        audio: "It is a beautiful day. Shoham and her mother walk to the park. The sun is yellow and hot. Shoham sees a small bird in a tree. The bird is blue. She also sees a black cat under a table. They sit on a chair and eat a pizza. It is very good! Shoham loves the park."
+        audio: "Everyone assumed Shoham couldn't excel at math because she always struggled with numbers. Her peers even perceived her as vulnerable in academic settings. But Shoham determined to challenge their assumption. She persevered through frustration and contemplated new strategies. Her meticulous approach began to flourish. When she finally accomplished a remarkable score, her classmates acknowledged her resilience. She had proven that stereotypes are just obstacles to overcome."
     },
     {
-        title: "The Magic Snowman ⛄",
+        title: "The Weight of Choices 🔀",
         content: [
-            "It is [[cold|קר|קוֹלְד|learned]] today. There is [[white|לבן|ווַיְיט|learned]] [[snow|שלג|סְנוֹו|learned]] everywhere. Shoham wants to build a [[snowman|איש שלג|סְנוֹו־מֶן|compound]].",
-            "She gives him a [[red|אדום|רֶד|learned]] hat and a carrot for a [[nose|אף|נוֹאוּז|learned]]. Suddenly, the snowman starts to [[speak|לדבר|סְפִּיק|learned]]! 'Hello Shoham,' he says.",
-            "They [[run|רצים|רָאן|learned]] and [[jump|קופצים|גָ'אמְפ|learned]] together in the snow. They become good [[friends|חברים|פְרֶנְדְס|learned]]. Shoham will [[never|אף פעם|נֶבֶר|learned]] [[forget|לשכוח|פוֹרְגֶט|learned]] this amazing day."
+            "Shoham [[face|עומדת בפני|פייס|new]] a [[profound|עמוק|פרופאונד|new]] [[dilemma|דילמה|דיילמה|new]]. She had two [[opportunity|הזדמנות|אפורטיוניטי|new]] - one [[provide|מספקת|פרוווייד|new]] [[security|בטחון|סיקיוריטי|new]], the other [[require|דורשת|ריקוואייר|new]] [[perseverance|התמדה|פרסיוורנס|new]] and [[ambition|שאיפה|אמביישן|new]]. Her [[mentor|מנחה|מנטור|new]] told her: 'The [[inevitable|בלתי נמנע|ינוויטאבל|new]] [[consequence|תוצאה|קונסיקונס|new]] of [[safe|בטוח|סייף|new]] [[choice|בחירה|צ'ויס|new]] is [[mediocre|בינוני|মিডিওকר|new]] [[accomplishment|הישג|אקומפלישמנט|new]].'",
+            "Shoham [[contemplate|חשבה|קונטמפליטד|learned]] for days. She felt [[vulnerable|חלוש|וולנרראבל|new]] about taking the [[risk|סיכון|ריסק|new]], but she [[acknowledge|הודתה|אקנאלדג'|learned]] that her [[reluctance|אי-רצון|רילוקטנס|new]] came from [[fear|פחד|פיר|learned]] of [[failure|כישלון|פיילור|new]], not from [[rational|הגיוני|רייショנל|new]] [[thinking|חשיבה|תינקינג|new]].",
+            "She [[determine|החליטה|דיטרמיינד|learned]] to [[persevere|להתמיד|פרסיווור|learned]] through the [[uncertainty|אי-ודאות|אנסרטיינטי|new]]. Her [[resilience|חוסני|רזיליאנס|new]] [[prove|הוכיחה|פרוווו|learned]] that [[true|אמיתי|טרו|new]] [[achievement|הישג|אצ'יוומנט|new]] [[require|דורשת|ריקוואייר|new]] both [[courage|אומץ|קורדז'|new]] and [[meticulous|זהיר מאוד|מטיקיולוס|new]] [[planning|תכנון|פלאנינג|new]]."
         ],
-        audio: "It is cold today. There is white snow everywhere. Shoham wants to build a snowman. She gives him a red hat and a carrot for a nose. Suddenly, the snowman starts to speak! Hello Shoham, he says. They run and jump together in the snow. They become good friends. Shoham will never forget this amazing day."
+        audio: "Shoham faced a profound dilemma. She had two opportunities - one providing security, the other requiring perseverance and ambition. Her mentor told her: The inevitable consequence of a safe choice is mediocre accomplishment. Shoham contemplated for days. She felt vulnerable about taking the risk, but she acknowledged that her reluctance came from fear of failure, not from rational thinking. She determined to persevere through the uncertainty. Her resilience proved that true achievement requires both courage and meticulous planning."
     },
     {
-        title: "The Lost Puppy 🐶",
+        title: "Compassion Versus Consequence 💔",
         content: [
-            "Shoham is walking home from [[school|בית ספר|סקול|learned]]. She hears a [[sad|עצוב|סאד|learned]] noise. She looks [[behind|מאחורי|ביהיינד|learned]] a [[big|גדול|ביג|learned]] [[tree|עץ|טרי|learned]].",
-            "She finds a [[small|קטן|סמול|learned]], [[dirty|מלוכלך|דירטי|learned]] [[dog|כלב|דוג|learned]]. He is very [[tired|עייף|טיירד|learned]] and [[hungry|רעב|האנגרי|new]].",
-            "Shoham takes the puppy home. She gives him [[water|מים|ווטר|learned]] and [[food|אוכל|פוד|new]]. Now, the puppy is [[clean|נקי|קלין|learned]] and very [[happy|שמח|האפי|learned]]!"
+            "Shoham [[discover|גילתה|דיסקאווורד|new]] an abandoned puppy that was [[vulnerable|חלוש|וולנרררבל|new]] and starving. She [[perceive|הבחינה|פרסיווו|learned]] the [[profound|עמוק|פרופאונד|new]] suffering in its [[eyes|עיניים|אייס|new]]. But bringing it home [[require|דרשה|ריקוואייר|new]] her to [[compromise|לפשר|קומפרומייז|learned]] with her [[parent|הורים|פרנט|new]], who were [[reluctant|לא רוצים|רילוקטנט|new]] to accept a pet.",
+            "She [[determine|החליטה|דיטרמיינד|learned]] to [[advocate|לתמוך בעד|אדוקיט|new]] for the puppy despite her [[initial|ראשוני|ינישאל|new]] [[reluctance|אי-רצון|רילוקטנס|new]] about [[conflict|קונפליקט|קונפליקט|new]]. She didn't [[persevere|התמדה|פרסיווור|learned]] through [[fear|פחד|פיר|learned]]; instead, she [[acknowledge|הודתה|אקנאלדג'|learned]] that [[compassion|חמלה|קומפאשן|new]] [[require|דורשת|ריקוואייר|new]] taking [[risk|סיכון|ריסק|new]].",
+            "The outcome was [[inevitable|בלתי נמנע|ינוויטאבל|new]]: her [[parent|הורים|פרנט|new]] [[perceive|ראו|פרסיווו|learned]] her [[meticulous|זהיר מאוד|מטיקיולוס|new]] care and [[determination|נחישות|דיטרמינישן|new]]. The family [[flourish|שגשגה|פלוריש|learned]] with the puppy, and Shoham's [[perseverance|התמדה|פרסיוורנס|new]] to do what was [[right|נכון|ריית|new]] [[accomplish|השלימה|אקומפליש|learned]] something [[remarkable|ראוי להערה|רימארקאבל|new]]: [[change|שינוי|צ'יינג'|new]] of [[heart|לב|הארט|learned]]."
         ],
-        audio: "Shoham is walking home from school. She hears a sad noise. She looks behind a big tree. She finds a small, dirty dog. He is very tired and hungry. Shoham takes the puppy home. She gives him water and food. Now, the puppy is clean and very happy!"
+        audio: "Shoham discovered an abandoned puppy that was vulnerable and starving. She perceived the profound suffering in its eyes. But bringing it home required her to compromise with her parents, who were reluctant to accept a pet. She determined to advocate for the puppy despite her initial reluctance about conflict. She didn't persevere through fear; instead, she acknowledged that compassion requires taking risk. The outcome was inevitable: her parents perceived her meticulous care and determination. The family flourished with the puppy, and Shoham's perseverance to do what was right accomplished something remarkable: change of heart."
     },
     {
         title: "The Big Test 📝",
