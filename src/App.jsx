@@ -105,6 +105,109 @@ const completionData = [
     { sentence: "His _______ attitude about climate change contradicts the scientific evidence.", options: ["concerned", "optimistic", "dismissive", "passionate"], correct: "dismissive" }
 ];
 
+// --- Verbs & Tenses Data (Comprehensive Advanced) ---
+const verbsData = [
+    {
+        infinitive: "Persist",
+        hebrew: "להתמיד",
+        exercises: [
+            { sentence: "She _______ through challenges every day.", options: ["persist", "persists", "persisted", "is persisting"], correct: "persists", tense: "Present Simple", explanation: "He/She/It - מוסיפים s" },
+            { sentence: "He _______ in his efforts yesterday.", options: ["persists", "persist", "persisted", "will persist"], correct: "persisted", tense: "Past Simple", explanation: "עבר משונה - הוסיפו ed" },
+            { sentence: "They _______ right now despite obstacles.", options: ["persist", "persists", "are persisting", "will persist"], correct: "are persisting", tense: "Present Continuous", explanation: "עכשיו - be + verb+ing" },
+            { sentence: "She _______ for five years already.", options: ["persists", "persisted", "has persisted", "will persist"], correct: "has persisted", tense: "Present Perfect", explanation: "עד עכשיו - have/has + past participle" },
+            { sentence: "By next year, they _______ for a decade.", options: ["will persist", "persists", "have persisted", "will have persisted"], correct: "will have persisted", tense: "Future Perfect", explanation: "עתיד - will have + past participle" }
+        ]
+    },
+    {
+        infinitive: "Accomplish",
+        hebrew: "להשלים",
+        exercises: [
+            { sentence: "He _______ his goals through hard work.", options: ["accomplish", "accomplishes", "accomplished", "will accomplish"], correct: "accomplishes", tense: "Present Simple", explanation: "Present - He/She/It מקבל s" },
+            { sentence: "She _______ what seemed impossible last month.", options: ["accomplish", "accomplishes", "accomplished", "will accomplish"], correct: "accomplished", tense: "Past Simple", explanation: "Past - ed בסוף" },
+            { sentence: "We _______ great things together right now.", options: ["accomplish", "accomplishes", "are accomplishing", "will accomplish"], correct: "are accomplishing", tense: "Present Continuous", explanation: "עכשיו בתהליך - be + ing" },
+            { sentence: "By graduation, he _______ all his objectives.", options: ["accomplishes", "accomplished", "has accomplished", "will have accomplished"], correct: "will have accomplished", tense: "Future Perfect", explanation: "עתיד מושלם" },
+            { sentence: "They _______ more than anyone expected by now.", options: ["accomplish", "accomplishes", "have accomplished", "will accomplish"], correct: "have accomplished", tense: "Present Perfect", explanation: "מהעבר עד עכשיו - have + past participle" }
+        ]
+    },
+    {
+        infinitive: "Flourish",
+        hebrew: "לשגשג",
+        exercises: [
+            { sentence: "The garden _______ in spring every year.", options: ["flourish", "flourishes", "flourished", "is flourishing"], correct: "flourishes", tense: "Present Simple", explanation: "תופעה קבועה - 3 יחיד s" },
+            { sentence: "The business _______ during that economic period.", options: ["flourish", "flourishes", "flourished", "will flourish"], correct: "flourished", tense: "Past Simple", explanation: "עבר - ed" },
+            { sentence: "Her talents _______ in this supportive environment.", options: ["flourish", "flourishes", "are flourishing", "will flourish"], correct: "are flourishing", tense: "Present Continuous", explanation: "בתהליך עכשיו - be + ing" },
+            { sentence: "The project _______ since we started supporting it.", options: ["flourishes", "flourished", "has flourished", "will flourish"], correct: "has flourished", tense: "Present Perfect", explanation: "מתחילת התהליך עד עכשיו" },
+            { sentence: "If conditions improve, the ecosystem _______ again.", options: ["flourish", "flourishes", "flourished", "will flourish"], correct: "will flourish", tense: "Future Simple", explanation: "עתיד - will + infinitive" }
+        ]
+    },
+    {
+        infinitive: "Contemplate",
+        hebrew: "לחשוב בעמוקות",
+        exercises: [
+            { sentence: "She _______ the meaning of the philosophical text.", options: ["contemplate", "contemplates", "contemplated", "is contemplating"], correct: "contemplates", tense: "Present Simple", explanation: "הרגלה - 3 יחיד s" },
+            { sentence: "They _______ the complex problem for hours yesterday.", options: ["contemplate", "contemplates", "contemplated", "will contemplate"], correct: "contemplated", tense: "Past Simple", explanation: "עבר - ed" },
+            { sentence: "He _______ his life decisions at this very moment.", options: ["contemplate", "contemplates", "is contemplating", "will contemplate"], correct: "is contemplating", tense: "Present Continuous", explanation: "עכשיו - am/is/are + ing" },
+            { sentence: "We _______ this issue since our last meeting.", options: ["contemplate", "contemplates", "have contemplated", "will contemplate"], correct: "have contemplated", tense: "Present Perfect", explanation: "מאז הפגישה - have + ed" },
+            { sentence: "By the deadline, they _______ all possible solutions.", options: ["contemplates", "contemplated", "will have contemplated", "are contemplating"], correct: "will have contemplated", tense: "Future Perfect", explanation: "עד הזמן הקבוע - will have + ed" }
+        ]
+    },
+    {
+        infinitive: "Acknowledge",
+        hebrew: "להודות",
+        exercises: [
+            { sentence: "The teacher _______ her student's exceptional effort.", options: ["acknowledge", "acknowledges", "acknowledged", "will acknowledge"], correct: "acknowledges", tense: "Present Simple", explanation: "כל יום - 3 יחיד s" },
+            { sentence: "The jury _______ the witness's credibility yesterday.", options: ["acknowledge", "acknowledges", "acknowledged", "will acknowledge"], correct: "acknowledged", tense: "Past Simple", explanation: "עבר - ed" },
+            { sentence: "Scientists _______ the validity of the new research right now.", options: ["acknowledge", "acknowledges", "are acknowledging", "will acknowledge"], correct: "are acknowledging", tense: "Present Continuous", explanation: "בתהליך - be + ing" },
+            { sentence: "They _______ the problem since it first emerged.", options: ["acknowledge", "acknowledges", "have acknowledged", "will acknowledge"], correct: "have acknowledged", tense: "Present Perfect", explanation: "מאז ההופעה - have + ed" },
+            { sentence: "By next conference, they _______ all contributions.", options: ["acknowledges", "acknowledged", "will have acknowledged", "are acknowledging"], correct: "will have acknowledged", tense: "Future Perfect", explanation: "עד הכנס - will have + ed" }
+        ]
+    },
+    {
+        infinitive: "Determine",
+        hebrew: "להחליט / לקבוע",
+        exercises: [
+            { sentence: "The test _______ who advances to the next level annually.", options: ["determine", "determines", "determined", "will determine"], correct: "determines", tense: "Present Simple", explanation: "כל שנה - 3 יחיד s" },
+            { sentence: "The committee _______ the outcome of the competition last week.", options: ["determine", "determines", "determined", "will determine"], correct: "determined", tense: "Past Simple", explanation: "עבר - ed" },
+            { sentence: "Your choices _______ your future path right now.", options: ["determine", "determines", "are determining", "will determine"], correct: "are determining", tense: "Present Continuous", explanation: "בתהליך - be + ing" },
+            { sentence: "Scientists _______ the cause of the phenomenon for months.", options: ["determines", "determined", "have determined", "will determine"], correct: "have determined", tense: "Present Perfect", explanation: "בחודשים האחרונים - have + ed" },
+            { sentence: "By the end of the year, they _______ the solution.", options: ["determines", "determined", "will have determined", "are determining"], correct: "will have determined", tense: "Future Perfect", explanation: "עד סוף השנה - will have + ed" }
+        ]
+    },
+    {
+        infinitive: "Perceive",
+        hebrew: "להבחין / להרגיש",
+        exercises: [
+            { sentence: "She _______ subtle changes in her environment constantly.", options: ["perceive", "perceives", "perceived", "will perceive"], correct: "perceives", tense: "Present Simple", explanation: "באופן קבוע - 3 יחיד s" },
+            { sentence: "He _______ the danger before anyone else did.", options: ["perceive", "perceives", "perceived", "will perceive"], correct: "perceived", tense: "Past Simple", explanation: "עבר - ed" },
+            { sentence: "We _______ the shift in the community's attitude today.", options: ["perceive", "perceives", "are perceiving", "will perceive"], correct: "are perceiving", tense: "Present Continuous", explanation: "עכשיו - be + ing" },
+            { sentence: "They _______ the problem's complexity since they started.", options: ["perceives", "perceived", "have perceived", "will perceive"], correct: "have perceived", tense: "Present Perfect", explanation: "מתחילת העבודה - have + ed" },
+            { sentence: "By studying carefully, you _______ deeper patterns.", options: ["perceives", "perceived", "will have perceived", "are perceiving"], correct: "will have perceived", tense: "Future Perfect", explanation: "אחרי לימוד - will have + ed" }
+        ]
+    },
+    {
+        infinitive: "Advocate",
+        hebrew: "לתמוך בעד",
+        exercises: [
+            { sentence: "She _______ for environmental protection in every speech.", options: ["advocate", "advocates", "advocated", "will advocate"], correct: "advocates", tense: "Present Simple", explanation: "תמיד - 3 יחיד s" },
+            { sentence: "They _______ for equal rights throughout history.", options: ["advocate", "advocates", "advocated", "will advocate"], correct: "advocated", tense: "Past Simple", explanation: "עבר - ed" },
+            { sentence: "The organization _______ for policy change at this moment.", options: ["advocate", "advocates", "are advocating", "will advocate"], correct: "are advocating", tense: "Present Continuous", explanation: "עכשיו - be + ing" },
+            { sentence: "He _______ for reform since the beginning of his career.", options: ["advocates", "advocated", "has advocated", "will advocate"], correct: "has advocated", tense: "Present Perfect", explanation: "מתחילת הקריירה - have + ed" },
+            { sentence: "By the next election, they _______ for these changes.", options: ["advocates", "advocated", "will have advocated", "are advocating"], correct: "will have advocated", tense: "Future Perfect", explanation: "עד הבחירות - will have + ed" }
+        ]
+    },
+    {
+        infinitive: "Compromise",
+        hebrew: "לפשר / להסכים",
+        exercises: [
+            { sentence: "Negotiators _______ on key issues to reach agreement.", options: ["compromise", "compromises", "compromised", "will compromise"], correct: "compromise", tense: "Present Simple", explanation: "מה שהם עושים - plural compromise" },
+            { sentence: "The two sides _______ after weeks of discussion.", options: ["compromise", "compromises", "compromised", "will compromise"], correct: "compromised", tense: "Past Simple", explanation: "עבר - ed" },
+            { sentence: "The committee _______ on the budget proposal right now.", options: ["compromise", "compromises", "is compromising", "will compromise"], correct: "is compromising", tense: "Present Continuous", explanation: "בתהליך - be + ing" },
+            { sentence: "We _______ on this matter since our first discussion.", options: ["compromises", "compromised", "have compromised", "will compromise"], correct: "have compromised", tense: "Present Perfect", explanation: "מהדיון הראשון - have + ed" },
+            { sentence: "By next month, they _______ on all outstanding issues.", options: ["compromises", "compromised", "will have compromised", "are compromising"], correct: "will have compromised", tense: "Future Perfect", explanation: "עד חודש - will have + ed" }
+        ]
+    }
+];
+
 // --- Multi-Story Data with Tooltip Parsing Format ---
 // Format: [[Word|Hebrew Translation|Hebrew Pronunciation|StyleCategory]]
 const storiesData = [
@@ -382,6 +485,12 @@ const App = () => {
         } catch { return false; }
     });
 
+    // Verb Tenses Game State
+    const [verbIndex, setVerbIndex] = useState(0);
+    const [exerciseIndex, setExerciseIndex] = useState(0);
+    const [verbScore, setVerbScore] = useState(0);
+    const [verbFeedback, setVerbFeedback] = useState(null);
+
     const isProcessingRef = useRef(false);
     const currentWord = wordsData[activeWordIndex] || wordsData[0];
 
@@ -637,6 +746,35 @@ const App = () => {
         }, 1200);
     };
 
+    const handleVerbAnswer = (selected) => {
+        if (isProcessingRef.current) return;
+        isProcessingRef.current = true;
+        const currentExercise = verbsData[verbIndex].exercises[exerciseIndex];
+
+        if (selected === currentExercise.correct) {
+            setVerbScore(prev => prev + 1);
+            playSound('success');
+            triggerAnimation('success-check');
+            setVerbFeedback({ type: 'success', message: `מצוין! ✅` });
+        } else {
+            playSound('error');
+            setVerbFeedback({ type: 'error', message: `טעות. התשובה הנכונה: ${currentExercise.correct}` });
+        }
+
+        setTimeout(() => {
+            if (exerciseIndex < 4) {
+                setExerciseIndex(prev => prev + 1);
+            } else if (verbIndex < verbsData.length - 1) {
+                setVerbIndex(prev => prev + 1);
+                setExerciseIndex(0);
+            } else {
+                setView('verb-result');
+            }
+            setVerbFeedback(null);
+            isProcessingRef.current = false;
+        }, 1500);
+    };
+
     const resetProgress = () => {
         if (confirm("האם לאפס התקדמות? הפעולה הזו תחזיר את כל המילים להיות 'לא נלמדו'.")) {
             setMasteredIndexes([]);
@@ -711,6 +849,7 @@ const App = () => {
                         <NavBtn icon="📖" text="קריאה" targetView="reading" action={() => {setView('reading'); setReadingPatternIndex(Math.floor(Math.random() * readingPatternsData.length)); setWordInPatternIndex(0);}} />
                         <NavBtn icon="🃏" text="זוגות" targetView="match" action={startMatchGame} />
                         <NavBtn icon="🏆" text="בוחן" targetView="quiz" action={startQuiz} />
+                        <NavBtn icon="🕐" text="פעלים" targetView="verbs" action={() => { setView('verbs'); setVerbIndex(0); setExerciseIndex(0); setVerbScore(0); setVerbFeedback(null); }} />
                     </div>
                 </header>
 
@@ -929,6 +1068,53 @@ const App = () => {
                                     {opt}
                                 </button>
                             ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* --- VERB TENSES VIEW --- */}
+                {view === 'verbs' && (
+                    <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border-t-8 border-blue-400 text-center transition-all">
+                        <h2 className="text-3xl font-black text-blue-800 mb-2">צמידות פעלים וזמנים 🕐</h2>
+                        <p className="text-slate-600 mb-6 font-bold">פועל {verbIndex + 1} מתוך {verbsData.length}: {verbsData[verbIndex].infinitive}</p>
+
+                        <div className="bg-blue-50 p-6 rounded-2xl border-2 border-blue-200 mb-8">
+                            <p className="text-2xl font-bold text-slate-800 mb-4">{verbsData[verbIndex].hebrew}</p>
+                            <p className="text-lg text-slate-700 mb-6">{verbsData[verbIndex].exercises[exerciseIndex].sentence}</p>
+                            <p className="text-sm text-blue-600 font-semibold mb-4">🕐 זמן: {verbsData[verbIndex].exercises[exerciseIndex].tense}</p>
+                        </div>
+
+                        {verbFeedback && (
+                            <div className={`p-4 rounded-2xl mb-6 font-bold text-lg ${verbFeedback.type === 'success' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}>
+                                {verbFeedback.message}
+                            </div>
+                        )}
+
+                        {!verbFeedback && (
+                            <div className="grid grid-cols-2 gap-3 md:gap-4 mb-8">
+                                {verbsData[verbIndex].exercises[exerciseIndex].options.map((opt, i) => (
+                                    <button key={i} onClick={() => handleVerbAnswer(opt)} className="p-4 bg-blue-50 border-2 border-blue-100 rounded-2xl font-bold text-lg text-blue-900 hover:bg-blue-500 hover:text-white transition-all shadow-sm hover:shadow-lg">
+                                        {opt}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
+                        {verbFeedback && verbFeedback.type === 'success' && (
+                            <p className="text-sm text-slate-600 font-semibold">💡 {verbsData[verbIndex].exercises[exerciseIndex].explanation}</p>
+                        )}
+
+                        <p className="text-slate-600 font-semibold">תרגיל {exerciseIndex + 1} מתוך 5</p>
+                    </div>
+                )}
+
+                {view === 'verb-result' && (
+                    <div className="bg-white rounded-[3rem] p-12 shadow-xl border-t-8 border-blue-500 text-center transition-all relative overflow-hidden min-h-[400px] flex flex-col justify-center">
+                        <div className="relative z-10">
+                            <h2 className="text-4xl font-black text-blue-900 mb-4">כל הכבוד בצמידות! 🎯</h2>
+                            <p className="text-2xl mb-4">הציון שלך:</p>
+                            <div className="text-8xl font-black text-blue-600 mb-8">{Math.round((verbScore / (verbsData.length * 5)) * 100)}%</div>
+                            <button onClick={() => { setView('learn'); setVerbIndex(0); setExerciseIndex(0); setVerbScore(0); }} className="px-8 py-4 bg-blue-500 text-white rounded-2xl font-bold text-xl hover:bg-blue-600 transition-colors">המשך למידה</button>
                         </div>
                     </div>
                 )}
