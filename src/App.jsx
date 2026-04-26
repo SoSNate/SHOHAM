@@ -135,6 +135,120 @@ const storiesData = [
     }
 ];
 
+// --- Reading & Vowel Patterns for Easy, Scaffolded Learning ---
+const readingPatternsData = [
+  {
+    pattern: "Short A",
+    sound: "like in 'cat'",
+    hebrew: "צליל קצר כמו בקול הגרון",
+    words: [
+      { word: "cat", breakdown: "C-A-T", hebrew: "חתול" },
+      { word: "hat", breakdown: "H-A-T", hebrew: "כובע" },
+      { word: "map", breakdown: "M-A-P", hebrew: "מפה" },
+      { word: "and", breakdown: "A-N-D", hebrew: "וגם" }
+    ]
+  },
+  {
+    pattern: "Short E",
+    sound: "like in 'pen'",
+    hebrew: "צליל קצר כמו בטיפול",
+    words: [
+      { word: "pen", breakdown: "P-E-N", hebrew: "עט" },
+      { word: "bed", breakdown: "B-E-D", hebrew: "מיטה" },
+      { word: "leg", breakdown: "L-E-G", hebrew: "רגל" },
+      { word: "net", breakdown: "N-E-T", hebrew: "רשת" }
+    ]
+  },
+  {
+    pattern: "Short I",
+    sound: "like in 'sit'",
+    hebrew: "צליל קצר וגבוה",
+    words: [
+      { word: "sit", breakdown: "S-I-T", hebrew: "ישב" },
+      { word: "big", breakdown: "B-I-G", hebrew: "גדול" },
+      { word: "zip", breakdown: "Z-I-P", hebrew: "רוכסן" },
+      { word: "win", breakdown: "W-I-N", hebrew: "ניצחון" }
+    ]
+  },
+  {
+    pattern: "Short O",
+    sound: "like in 'dog'",
+    hebrew: "צליל עגול וקצר",
+    words: [
+      { word: "dog", breakdown: "D-O-G", hebrew: "כלב" },
+      { word: "box", breakdown: "B-O-X", hebrew: "קופסה" },
+      { word: "hot", breakdown: "H-O-T", hebrew: "חם" },
+      { word: "pot", breakdown: "P-O-T", hebrew: "סיר" }
+    ]
+  },
+  {
+    pattern: "Short U",
+    sound: "like in 'cup'",
+    hebrew: "צליל עמוק וקצר",
+    words: [
+      { word: "cup", breakdown: "C-U-P", hebrew: "כוס" },
+      { word: "run", breakdown: "R-U-N", hebrew: "רוץ" },
+      { word: "sun", breakdown: "S-U-N", hebrew: "שמש" },
+      { word: "bug", breakdown: "B-U-G", hebrew: "חרק" }
+    ]
+  },
+  {
+    pattern: "Long A (with silent E)",
+    sound: "like in 'cake' - A_E",
+    hebrew: "צליל ארוך כשה-E שקט בסוף",
+    words: [
+      { word: "cake", breakdown: "C-A-K-E", hebrew: "עוגה", note: "E שקט בסוף" },
+      { word: "name", breakdown: "N-A-M-E", hebrew: "שם", note: "E שקט בסוף" },
+      { word: "make", breakdown: "M-A-K-E", hebrew: "עשה", note: "E שקט בסוף" },
+      { word: "late", breakdown: "L-A-T-E", hebrew: "מאוחר", note: "E שקט בסוף" }
+    ]
+  },
+  {
+    pattern: "Long E (EA combination)",
+    sound: "like in 'read' - EA",
+    hebrew: "צליל ארוך עם שתי אותיות",
+    words: [
+      { word: "read", breakdown: "R-EA-D", hebrew: "קרא", note: "EA יחד" },
+      { word: "team", breakdown: "T-EA-M", hebrew: "צוות", note: "EA יחד" },
+      { word: "eat", breakdown: "EA-T", hebrew: "אכול", note: "EA יחד" },
+      { word: "seat", breakdown: "S-EA-T", hebrew: "כיסא", note: "EA יחד" }
+    ]
+  },
+  {
+    pattern: "Long O (OA combination)",
+    sound: "like in 'boat' - OA",
+    hebrew: "צליל ארוך עם שתי אותיות",
+    words: [
+      { word: "boat", breakdown: "B-OA-T", hebrew: "סירה", note: "OA יחד" },
+      { word: "coat", breakdown: "C-OA-T", hebrew: "מעיל", note: "OA יחד" },
+      { word: "road", breakdown: "R-OA-D", hebrew: "דרך", note: "OA יחד" },
+      { word: "goat", breakdown: "G-OA-T", hebrew: "עז", note: "OA יחד" }
+    ]
+  },
+  {
+    pattern: "OU combination",
+    sound: "like in 'house' - OU",
+    hebrew: "צליל שמע בגרון",
+    words: [
+      { word: "house", breakdown: "H-OU-S-E", hebrew: "בית", note: "OU יחד" },
+      { word: "mouse", breakdown: "M-OU-S-E", hebrew: "עכבר", note: "OU יחד" },
+      { word: "loud", breakdown: "L-OU-D", hebrew: "חזק", note: "OU יחד" },
+      { word: "cloud", breakdown: "CL-OU-D", hebrew: "ענן", note: "OU יחד" }
+    ]
+  },
+  {
+    pattern: "Vowel combinations (AI, EI, IE)",
+    sound: "like in 'rain', 'vein', 'pie'",
+    hebrew: "שתי אותיות שיוצרות צליל אחד",
+    words: [
+      { word: "rain", breakdown: "R-AI-N", hebrew: "גשם", note: "AI = EI" },
+      { word: "day", breakdown: "D-AY", hebrew: "יום", note: "AY = AI" },
+      { word: "pie", breakdown: "P-IE", hebrew: "עוגה", note: "IE צליל ארוך I" },
+      { word: "fly", breakdown: "FL-Y", hebrew: "זבוב", note: "Y כמו vowel בסוף" }
+    ]
+  }
+];
+
 const App = () => {
     // Load Lottie web component dynamically
     useEffect(() => {
@@ -202,6 +316,8 @@ const App = () => {
     const [analogyIndex, setAnalogyIndex] = useState(0);
     const [compIndex, setCompIndex] = useState(0);
     const [storyIndex, setStoryIndex] = useState(0);
+    const [readingPatternIndex, setReadingPatternIndex] = useState(0);
+    const [wordInPatternIndex, setWordInPatternIndex] = useState(0);
 
     // Match Game State
     const [matchCards, setMatchCards] = useState([]);
@@ -527,6 +643,7 @@ const App = () => {
                         <NavBtn icon="🔗" text="אנלוגיות" targetView="analogies" action={() => {setView('analogies'); setAnalogyIndex(Math.floor(Math.random() * analogiesData.length));}} />
                         <NavBtn icon="✍️" text="משפטים" targetView="completion" action={() => {setView('completion'); setCompIndex(Math.floor(Math.random() * completionData.length));}} />
                         <NavBtn icon="📚" text="סיפור" targetView="story" action={() => {setView('story'); setStoryIndex(Math.floor(Math.random() * storiesData.length));}}/>
+                        <NavBtn icon="📖" text="קריאה" targetView="reading" action={() => {setView('reading'); setReadingPatternIndex(Math.floor(Math.random() * readingPatternsData.length)); setWordInPatternIndex(0);}} />
                         <NavBtn icon="🃏" text="זוגות" targetView="match" action={startMatchGame} />
                         <NavBtn icon="🏆" text="בוחן" targetView="quiz" action={startQuiz} />
                     </div>
@@ -788,6 +905,67 @@ const App = () => {
                                 <span>🎲</span> סיפור אחר
                             </button>
                         </div>
+                    </div>
+                )}
+
+                {/* --- READING & VOWEL PATTERNS --- */}
+                {view === 'reading' && (
+                    <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border-t-8 border-pink-400 text-center transition-all">
+                        <h2 className="text-3xl font-black text-pink-800 mb-2">קריאה וניקוד אנגלית 📖</h2>
+                        <p className="text-slate-600 mb-6 font-bold">דוגמה {readingPatternIndex + 1} מתוך {readingPatternsData.length}</p>
+
+                        {/* Pattern name and description */}
+                        <div className="bg-pink-50 p-6 rounded-2xl border-2 border-pink-200 mb-6">
+                            <h3 className="text-2xl font-black text-pink-900 mb-2">{readingPatternsData[readingPatternIndex].pattern}</h3>
+                            <p className="text-lg font-bold text-pink-800 mb-2">{readingPatternsData[readingPatternIndex].sound}</p>
+                            <p className="text-slate-700 font-semibold">{readingPatternsData[readingPatternIndex].hebrew}</p>
+                        </div>
+
+                        {/* Current word */}
+                        {readingPatternsData[readingPatternIndex].words[wordInPatternIndex] && (
+                            <div className="bg-blue-50 p-8 rounded-3xl border-4 border-blue-200 mb-8">
+                                {/* English word */}
+                                <p className="text-5xl font-black text-blue-900 mb-4" dir="ltr">
+                                    {readingPatternsData[readingPatternIndex].words[wordInPatternIndex].word}
+                                </p>
+
+                                {/* Breakdown with colors */}
+                                <p className="text-3xl font-bold text-slate-700 mb-4 tracking-widest" dir="ltr">
+                                    {readingPatternsData[readingPatternIndex].words[wordInPatternIndex].breakdown}
+                                </p>
+
+                                {/* Hebrew translation */}
+                                <p className="text-2xl font-bold text-slate-800 mb-3">
+                                    {readingPatternsData[readingPatternIndex].words[wordInPatternIndex].hebrew}
+                                </p>
+
+                                {/* Note if exists */}
+                                {readingPatternsData[readingPatternIndex].words[wordInPatternIndex].note && (
+                                    <p className="text-lg font-bold text-pink-700 italic">
+                                        💡 {readingPatternsData[readingPatternIndex].words[wordInPatternIndex].note}
+                                    </p>
+                                )}
+                            </div>
+                        )}
+
+                        {/* Buttons */}
+                        <div className="flex flex-col sm:flex-row justify-center gap-4 flex-wrap mb-6">
+                            <button onClick={() => speakText(readingPatternsData[readingPatternIndex].words[wordInPatternIndex].word)} className="px-6 py-3 bg-pink-500 text-white rounded-xl font-bold flex items-center gap-2 hover:bg-pink-600 shadow-md transition-colors">
+                                <span>🔊</span> שמע המילה
+                            </button>
+                            {wordInPatternIndex < readingPatternsData[readingPatternIndex].words.length - 1 ? (
+                                <button onClick={() => setWordInPatternIndex(prev => prev + 1)} className="px-6 py-3 bg-white border-2 border-pink-400 text-pink-600 rounded-xl font-bold flex items-center gap-2 hover:bg-pink-50 shadow-sm transition-colors">
+                                    <span>➡️</span> המילה הבאה
+                                </button>
+                            ) : (
+                                <button onClick={() => { setReadingPatternIndex(prev => getNextRandom(prev, readingPatternsData.length)); setWordInPatternIndex(0); }} className="px-6 py-3 bg-white border-2 border-pink-400 text-pink-600 rounded-xl font-bold flex items-center gap-2 hover:bg-pink-50 shadow-sm transition-colors">
+                                    <span>🎲</span> דוגמה הבאה
+                                </button>
+                            )}
+                        </div>
+
+                        {/* Progress indicator */}
+                        <p className="text-slate-600 font-semibold">מילה {wordInPatternIndex + 1} מתוך {readingPatternsData[readingPatternIndex].words.length}</p>
                     </div>
                 )}
             </div>
