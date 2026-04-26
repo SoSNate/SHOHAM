@@ -45,8 +45,9 @@ const wordsData = [
   { en: "Diligent", he: "חרוץ / שקדן" }
 ];
 
-// --- Builder Data (6th-7th Grade) ---
+// --- Builder Data (7th-8th Grade Advanced) ---
 const builderData = [
+    // Compound Words
     { type: "compound", part1: "Sun", part1Meaning: "שמש", part2: "Flower", part2Meaning: "פרח", word: "Sunflower", options: ["כלנית", "חמנייה", "ורד"], correct: 1, explanation: "פרח השמש - חמנייה שפונה אל השמש." },
     { type: "compound", part1: "Snow", part1Meaning: "שלג", part2: "Man", part2Meaning: "איש", word: "Snowman", options: ["גשם", "חורף", "איש שלג"], correct: 2, explanation: "איש שעשוי משלג = איש שלג." },
     { type: "compound", part1: "Bed", part1Meaning: "מיטה", part2: "Room", part2Meaning: "חדר", word: "Bedroom", options: ["סלון", "חדר שינה", "מטבח"], correct: 1, explanation: "החדר שבו נמצאת המיטה = חדר שינה." },
@@ -55,12 +56,21 @@ const builderData = [
     { type: "compound", part1: "Play", part1Meaning: "לשחק", part2: "Ground", part2Meaning: "אדמה", word: "Playground", options: ["גן שעשועים", "כדורגל", "פארק מים"], correct: 0, explanation: "המקום (אדמה) שבו משחקים = גן שעשועים." },
     { type: "compound", part1: "Class", part1Meaning: "שיעור", part2: "Room", part2Meaning: "חדר", word: "Classroom", options: ["הפסקה", "כיתה", "בית ספר"], correct: 1, explanation: "החדר שבו לומדים את השיעור = כיתה." },
     { type: "compound", part1: "Water", part1Meaning: "מים", part2: "Melon", part2Meaning: "מלון", word: "Watermelon", options: ["תפוח", "אבטיח", "ענבים"], correct: 1, explanation: "פרי שמלא במים = אבטיח." },
+
+    // Advanced Prefixes
     { type: "prefix", prefix: "Un", root: "Happy", rootMeaning: "שמח", word: "Unhappy", options: ["עצוב / לא שמח", "מאוד שמח", "צוחק"], correct: 0, explanation: "הקידומת Un הופכת את המילה לשלילית. לא-שמח = עצוב." },
-    { type: "prefix", prefix: "Re", root: "Read", rootMeaning: "לקרוא", word: "Reread", options: ["לכתוב", "לקרוא שוב", "לשכוח"], correct: 1, explanation: "הקידומת Re אומרת 'לעשות שוב'." }
+    { type: "prefix", prefix: "Re", root: "Read", rootMeaning: "לקרוא", word: "Reread", options: ["לכתוב", "לקרוא שוב", "לשכוח"], correct: 1, explanation: "הקידומת Re אומרת 'לעשות שוב'." },
+    { type: "prefix", prefix: "Dis", root: "Agree", rootMeaning: "להסכים", word: "Disagree", options: ["להסכים מאוד", "לא להסכים", "להתווכח"], correct: 1, explanation: "הקידומת Dis מציינת הפך או חוסר הסכמה." },
+    { type: "prefix", prefix: "Mis", root: "Understand", rootMeaning: "להבין", word: "Misunderstand", options: ["להבין בצורה שגויה", "להבין במהירות", "להבין לעומק"], correct: 0, explanation: "הקידומת Mis אומרת 'לעשות בצורה שגויה'." },
+    { type: "prefix", prefix: "Over", root: "Think", rootMeaning: "לחשוב", word: "Overthink", options: ["לחשוב מעט", "לחשוב יותר מידי", "לא לחשוב"], correct: 1, explanation: "הקידומת Over אומרת 'יותר מידי' או 'יתר על המידה'." },
+    { type: "prefix", prefix: "Under", root: "Stand", rootMeaning: "לעמוד", word: "Understand", options: ["לעמוד תחת", "להבין", "להיות מתחת"], correct: 1, explanation: "Under במשמעות רחוקה אומרת 'להבין' - כמו 'עמידה בתוך'." },
+    { type: "prefix", prefix: "Pre", root: "Plan", rootMeaning: "לתכנן", word: "Preplan", options: ["תכנון מראש", "תכנון חוזר", "ביטול תכנון"], correct: 0, explanation: "הקידומת Pre אומרת 'לפני' או 'מראש'." },
+    { type: "prefix", prefix: "Non", root: "Fiction", rootMeaning: "בדיוני", word: "Nonfiction", options: ["ספרות בדיוני", "ספרות מציאותית", "סיפור בדיוני"], correct: 1, explanation: "הקידומת Non אומרת 'לא' או 'ללא'." }
 ];
 
-// --- Analogies Data ---
+// --- Analogies Data (Advanced 7th-8th Grade) ---
 const analogiesData = [
+    // Basic relationships (original)
     { word1: "Dog", word2: "Animal", relation: "סוג של...", word3: "Apple", options: ["Food", "Drink", "Color", "Toy"], correct: "Food" },
     { word1: "Big", word2: "Small", relation: "הפכים (Opposites)", word3: "Hot", options: ["Cold", "Warm", "Red", "Sun"], correct: "Cold" },
     { word1: "Happy", word2: "Sad", relation: "הפכים (Opposites)", word3: "Fast", options: ["Slow", "Run", "Jump", "Play"], correct: "Slow" },
@@ -68,10 +78,16 @@ const analogiesData = [
     { word1: "Day", word2: "Night", relation: "הפכים", word3: "Sun", options: ["Moon", "Star", "Sky", "Tree"], correct: "Moon" },
     { word1: "Eye", word2: "See", relation: "איבר והפעולה שלו", word3: "Ear", options: ["Listen", "Speak", "Eat", "Run"], correct: "Listen" },
     { word1: "White", word2: "Black", relation: "צבעים הופכיים", word3: "Good", options: ["Bad", "Happy", "Clean", "Dirty"], correct: "Bad" },
-    { word1: "Drink", word2: "Water", relation: "פעולה ומה שעושים איתו", word3: "Eat", options: ["Pizza", "Book", "Pen", "Table"], correct: "Pizza" }
+    { word1: "Drink", word2: "Water", relation: "פעולה ומה שעושים איתו", word3: "Eat", options: ["Pizza", "Book", "Pen", "Table"], correct: "Pizza" },
+
+    // Advanced relationships
+    { word1: "Optimism", word2: "Hope", relation: "רגשות מופשטים דומים", word3: "Courage", options: ["Fear", "Strength", "Wisdom", "Doubt"], correct: "Strength" },
+    { word1: "Author", word2: "Novel", relation: "יוצר ויצירה", word3: "Composer", options: ["Song", "Music", "Orchestra", "Symphony"], correct: "Symphony" },
+    { word1: "Reluctance", word2: "Hesitation", relation: "תחושות דומות", word3: "Perseverance", options: ["Weakness", "Confidence", "Determination", "Doubt"], correct: "Determination" },
+    { word1: "Root", word2: "Tree", relation: "חלק מכל", word3: "Page", options: ["Book", "Paper", "Ink", "Cover"], correct: "Book" }
 ];
 
-// --- Sentence Completion Data (Context-Heavy) ---
+// --- Sentence Completion Data (Advanced 7th-8th Grade Context-Heavy) ---
 const completionData = [
     { sentence: "I eat an _______ every morning because it is healthy.", options: ["Apple", "Book", "Dog", "Shoe"], correct: "Apple" },
     { sentence: "Please _______ the door, it is very cold outside.", options: ["Close", "Open", "Buy", "Run"], correct: "Close" },
@@ -82,7 +98,11 @@ const completionData = [
     { sentence: "The _______ is yellow and it makes the day hot.", options: ["Sun", "Moon", "Snow", "Rain"], correct: "Sun" },
     { sentence: "I like to _______ a good story book before I go to sleep.", options: ["Read", "Write", "Listen", "Speak"], correct: "Read" },
     { sentence: "I use my eyes to see, and my _______ to listen to music.", options: ["Ear", "Nose", "Hand", "Foot"], correct: "Ear" },
-    { sentence: "My shirt is _______ because I played in the mud.", options: ["Dirty", "Clean", "New", "White"], correct: "Dirty" }
+    { sentence: "My shirt is _______ because I played in the mud.", options: ["Dirty", "Clean", "New", "White"], correct: "Dirty" },
+
+    // Advanced completions
+    { sentence: "Despite her initial _______, she eventually found confidence speaking in public.", options: ["enthusiasm", "trepidation", "joy", "knowledge"], correct: "trepidation" },
+    { sentence: "His _______ attitude about climate change contradicts the scientific evidence.", options: ["concerned", "optimistic", "dismissive", "passionate"], correct: "dismissive" }
 ];
 
 // --- Multi-Story Data with Tooltip Parsing Format ---
@@ -132,6 +152,36 @@ const storiesData = [
             "It is [[late|מאוחר|לייט|new]] at [[night|לילה|נייט|learned]], but she wants to get a [[good|טוב|גוד|learned]] grade. Finally, she goes to [[sleep|לישון|סליפ|learned]]. She is ready!"
         ],
         audio: "Tomorrow is a big day. There is a math test at school. Shoham sits on her chair and takes her pencil and notebook. She starts to read and write. It is late at night, but she wants to get a good grade. Finally, she goes to sleep. She is ready!"
+    },
+
+    {
+        title: "Finding Her Voice 💪",
+        content: [
+            "Shoham had always been [[quiet|שקט|קווייט|learned]]. When her [[teacher|מורה|טיצ'ר|new]] asked questions in class, she felt [[nervous|עצבני|נרווס|new]] and [[worried|דאוג|וררייד|new]]. All the other students could [[speak|לדבר|ספיק|learned]] [[confidently|בביטחון|קונפידנטלי|new]], but not her.",
+            "One [[day|יום|דיי|learned]], she had an [[idea|רעיון|אידיאה|new]] about the [[project|פרויקט|פרוג'קט|new]]. She wanted to [[share|לשתף|שר|new]] it, but her [[heart|לב|הארט|learned]] was [[beating|פוקד|ביטינג|new]] so [[fast|מהיר|פאסט|learned]]. She [[took|לקח|טוק|learned]] a [[deep|עמוק|דיפ|new]] [[breath|נשימה|ברת|new]] and [[raised|הרים|ריזד|new]] her [[hand|יד|האנד|learned]].",
+            "The other students [[listened|הקשיבו|ליסנד|learned]] carefully. Her [[teacher|מורה|טיצ'ר|new]] [[smiled|חיך|סמיילד|learned]] and said, 'Wonderful idea, Shoham!' That [[day|יום|דיי|learned]], she [[discovered|גילתה|דיסקאוו'רד|new]] something [[important|חשוב|ימפורטנט|new]] about herself."
+        ],
+        audio: "Shoham had always been quiet. When her teacher asked questions in class, she felt nervous and worried. All the other students could speak confidently, but not her. One day, she had an idea about the project. She wanted to share it, but her heart was beating so fast. She took a deep breath and raised her hand. The other students listened carefully. Her teacher smiled and said, Wonderful idea, Shoham! That day, she discovered something important about herself."
+    },
+
+    {
+        title: "The Competition 🏆",
+        content: [
+            "Shoham [[trained|אומנה|טרייnd|new]] hard for the [[math|מתמטיקה|מאת|new]] [[competition|תחרות|קומפטישן|new]]. She [[practiced|התרגלה|פראקטיסד|new]] every [[night|לילה|נייט|learned]]. When the [[day|יום|דיי|learned]] came, she was [[ready|מוכנה|רדי|learned]].",
+            "But when she [[saw|ראתה|סו|learned]] the [[difficult|קשה|דיפיקלט|new]] [[problems|בעיות|פרובלמס|new]], her [[mind|מוח|מיינד|new]] felt [[blank|ריק|בלאנק|new]]. She didn't win the [[competition|תחרות|קומפטישן|new]]. She felt [[disappointed|מאוכזבת|דיסאפוינטד|new]].",
+            "Later, her [[mother|אמא|מאדר|learned]] told her something [[important|חשוב|ימפורטנט|new]]: 'You tried your [[best|הטוב|בסט|new]]. That's what really [[matters|חשוב|מטרס|new]].' Shoham [[realized|הבינה|ריאליזד|new]] that [[failing|כישלון|פיילינג|new]] once doesn't mean you should [[give up|להתייאש|גיב אפ|new]]."
+        ],
+        audio: "Shoham trained hard for the math competition. She practiced every night. When the day came, she was ready. But when she saw the difficult problems, her mind felt blank. She didn't win the competition. She felt disappointed. Later, her mother told her something important: You tried your best. That's what really matters. Shoham realized that failing once doesn't mean you should give up."
+    },
+
+    {
+        title: "Different Paths 🌈",
+        content: [
+            "Shoham and her [[best|הטוב|בסט|new]] [[friend|חברה|פרנד|learned]] Noa did everything together. They played the [[same|אותו|סיים|new]] [[games|משחקים|גיימס|learned]] and had the [[same|אותו|סיים|new]] [[interests|תחומי עניין|אינטרסטס|new]].",
+            "One [[day|יום|דיי|learned]], Noa told Shoham that she wanted to join the [[art|אמנות|ארט|new]] [[club|מועדון|קלוב|new]], while Shoham preferred the [[science|מדע|סיינס|new]] [[club|מועדון|קלוב|new]]. For the [[first|ראשון|פרסט|new]] [[time|זמן|טיים|learned]], they had [[different|שונה|דיפרנט|new]] [[paths|נתיבות|פאתס|new]].",
+            "Shoham felt [[sad|עצוב|סאד|learned]], but she [[learned|למדה|לרנד|learned]] something [[valuable|יקר|וואליואבל|new]]: You can still be [[best|הטוב|בסט|new]] [[friends|חברים|פרנדס|learned]] even when you have [[different|שונה|דיפרנט|new]] [[interests|תחומי עניין|אינטרסטס|new]]. [[Friendship|חברות|פרנדשיפ|new]] is [[strong|חזק|סטרונג|new]] enough to [[survive|להתמודד|סערווייוו|new]] different [[choices|בחירות|צ'ויסיס|new]]."
+        ],
+        audio: "Shoham and her best friend Noa did everything together. They played the same games and had the same interests. One day, Noa told Shoham that she wanted to join the art club, while Shoham preferred the science club. For the first time, they had different paths. Shoham felt sad, but she learned something valuable: You can still be best friends even when you have different interests. Friendship is strong enough to survive different choices."
     }
 ];
 
@@ -324,6 +374,14 @@ const App = () => {
     const [flippedCards, setFlippedCards] = useState([]);
     const [matchedPairs, setMatchedPairs] = useState([]);
 
+    // Story Audio Mute State
+    const [storyAudioMuted, setStoryAudioMuted] = useState(() => {
+        try {
+            const saved = localStorage.getItem('shoham_story_audio_muted');
+            return saved ? JSON.parse(saved) : false;
+        } catch { return false; }
+    });
+
     const isProcessingRef = useRef(false);
     const currentWord = wordsData[activeWordIndex] || wordsData[0];
 
@@ -331,6 +389,10 @@ const App = () => {
         localStorage.setItem('shoham_mastered_words', JSON.stringify(masteredIndexes));
         localStorage.setItem('shoham_last_active_index', activeWordIndex.toString());
     }, [masteredIndexes, activeWordIndex]);
+
+    useEffect(() => {
+        localStorage.setItem('shoham_story_audio_muted', JSON.stringify(storyAudioMuted));
+    }, [storyAudioMuted]);
 
     const playSound = (type) => {
         try {
@@ -424,9 +486,12 @@ const App = () => {
     }, [step, activeWordIndex, view, currentWord]);
 
     const speakText = (text) => {
+        // Check if story audio is muted (only applies to story audio, not other uses)
+        if (storyAudioMuted && view === 'story') return;
+
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US'; 
+        utterance.lang = 'en-US';
         utterance.rate = 0.85; // קצב קצת יותר איטי ורגוע
         utterance.pitch = 1.15; // פיץ' קצת יותר גבוה ורך
         
@@ -899,7 +964,10 @@ const App = () => {
                         
                         <div className="flex justify-center gap-4 mt-8 flex-wrap">
                             <button onClick={() => speakText(storiesData[storyIndex].audio)} className="px-8 py-4 bg-rose-400 text-white rounded-xl font-bold flex items-center gap-2 hover:bg-rose-500 shadow-md transition-colors">
-                                <span>🔊</span> השמע סיפור
+                                <span>{storyAudioMuted ? '🔇' : '🔊'}</span> {storyAudioMuted ? 'הקשיבי סיפור' : 'השמע סיפור'}
+                            </button>
+                            <button onClick={() => setStoryAudioMuted(!storyAudioMuted)} className="px-8 py-4 bg-white border-2 border-rose-400 text-rose-600 rounded-xl font-bold flex items-center gap-2 hover:bg-rose-50 shadow-sm transition-colors">
+                                <span>{storyAudioMuted ? '🔇' : '🔊'}</span> {storyAudioMuted ? 'הפעלת קול' : 'השתקת קול'}
                             </button>
                             <button onClick={() => setStoryIndex(prev => getNextRandom(prev, storiesData.length))} className="px-8 py-4 bg-white border-2 border-rose-400 text-rose-600 rounded-xl font-bold flex items-center gap-2 hover:bg-rose-50 shadow-sm transition-colors">
                                 <span>🎲</span> סיפור אחר
