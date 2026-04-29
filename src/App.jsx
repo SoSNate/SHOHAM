@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// --- Vocabulary: STRICTLY 6th Grade Test Material (from the doc) ---
+// --- Vocabulary: 6th Grade Test Material + Extended Verbs ---
 const wordsData = [
-    // Irregular Verbs (V1 - V2)
+    // Irregular Verbs (V1 - V2) - From Syllabus
     { en: "see - saw", he: "לראות - ראה" },
     { en: "have - had", he: "יש - היה" },
     { en: "know - knew", he: "לדעת - ידע" },
@@ -17,17 +17,29 @@ const wordsData = [
     { en: "think - thought", he: "לחשוב - חשב" },
     { en: "eat - ate", he: "לאכול - אכל" },
 
-    // Regular Verbs
+    // Regular Verbs - From Syllabus
     { en: "save - saved", he: "לשמור/להציל - שמר" },
     { en: "watch - watched", he: "לצפות - צפה" },
     { en: "plan - planned", he: "לתכנן - תכנן (הכפלת אות)" },
 
     // To Be (was/were)
     { en: "was / wasn't", he: "היה / לא היה (ליחיד)" },
-    { en: "were / weren't", he: "היו / לא היו (לרבים)" }
+    { en: "were / weren't", he: "היו / לא היו (לרבים)" },
+
+    // --- Extended Vocabulary (Present/Past concepts) ---
+    { en: "play - played", he: "לשחק - שיחק" },
+    { en: "run - ran", he: "לרוץ - רץ" },
+    { en: "drink - drank", he: "לשתות - שתה" },
+    { en: "sleep - slept", he: "לישון - ישן" },
+    { en: "read - read", he: "לקרוא - קרא" },
+    { en: "write - wrote", he: "לכתוב - כתב" },
+    { en: "do - did", he: "לעשות - עשה" },
+    { en: "make - made", he: "להכין - הכין" },
+    { en: "speak - spoke", he: "לדבר - דיבר" },
+    { en: "listen - listened", he: "להקשיב - הקשיב" }
 ];
 
-// --- Grammar Builder: Past Simple Rules (Challenging & Educational) ---
+// --- Grammar Builder: Past Simple Rules ---
 const grammarData = [
     { prompt: "I (go) to the park yesterday.", options: ["went", "goed", "go"], correct: 0, rule: "הפועל go הוא יוצא דופן ובעבר הופך ל-went." },
     { prompt: "She (not/see) the movie last night.", options: ["didn't saw", "didn't see", "wasn't see"], correct: 1, rule: "במשפט שלילה בעבר משתמשים ב-didn't ואז הפועל נשאר בצורת המקור (V1)!" },
@@ -39,7 +51,7 @@ const grammarData = [
     { prompt: "She (cut) the cake.", options: ["cutted", "cut", "cat"], correct: 1, rule: "הפועל cut הוא מיוחד - הוא נשאר זהה גם בהווה וגם בעבר!" }
 ];
 
-// --- Analogies Data (Past Simple logic) ---
+// --- Analogies Data ---
 const analogiesData = [
     { word1: "Go", word2: "Went", relation: "הווה לעבר", word3: "See", options: ["Saw", "Seen", "Seed", "Seeing"], correct: "Saw" },
     { word1: "Buy", word2: "Bought", relation: "הווה לעבר", word3: "Think", options: ["Thinked", "Thought", "Thank", "Thinks"], correct: "Thought" },
@@ -49,10 +61,10 @@ const analogiesData = [
     { word1: "Find", word2: "Found", relation: "V1 -> V2", word3: "Know", options: ["Knew", "Knowed", "Known", "Knews"], correct: "Knew" }
 ];
 
-// --- Word Bank Completion (Test format) ---
+// --- Word Bank Completion ---
 const completionData = [
     { sentence: "They _______ a great movie last night.", bank: ["went", "watched", "bought", "were"], correct: "watched" },
-    { sentence: "Shoham didn't _______ to the park because it rained.", bank: ["go", "went", "saw", "was"], correct: "go" },
+    { sentence: "Maya didn't _______ to the park because it rained.", bank: ["go", "went", "saw", "was"], correct: "go" },
     { sentence: "I _______ very happy when I passed the test.", bank: ["did", "were", "was", "had"], correct: "was" },
     { sentence: "We _______ a new computer at the store.", bank: ["knew", "bought", "left", "thought"], correct: "bought" },
     { sentence: "_______ she ride her bike yesterday?", bank: ["Was", "Did", "Were", "Do"], correct: "Did" },
@@ -64,13 +76,13 @@ const storiesData = [
     {
         title: "The Weekend Adventure 🌳",
         content: [
-            "Yesterday, Shoham and her family [[went|הלכו|וונט|learned]] to the park. The weather [[was|היה|ווז|learned]] very beautiful. They [[planned|תכננו|פלאנד|learned]] to have a picnic.",
-            "Her dad [[bought|קנה|בוט|learned]] a big pizza, and they [[ate|אכלו|אייט|learned]] it under a tree. After that, Shoham [[rode|רכבה|רוד|learned]] her bike and her brother [[watched|צפה|ווטצ'ד|learned]] a game.",
-            "Suddenly, Shoham [[saw|ראתה|סו|learned]] a small dog. She [[found|מצאה|פאונד|learned]] the owner. They didn't [[leave|לעזוב|ליב|learned]] until it was dark. Shoham [[thought|חשבה|ת'וט|learned]] it was a great day!"
+            "Yesterday, Maya and her family [[went|הלכו|וונט|learned]] to the park. The weather [[was|היה|ווז|learned]] very beautiful. They [[planned|תכננו|פלאנד|learned]] to have a picnic.",
+            "Her dad [[bought|קנה|בוט|learned]] a big pizza, and they [[ate|אכלו|אייט|learned]] it under a tree. After that, Maya [[rode|רכבה|רוד|learned]] her bike and her brother [[watched|צפה|ווטצ'ד|learned]] a game.",
+            "Suddenly, Maya [[saw|ראתה|סו|learned]] a small dog. She [[found|מצאה|פאונד|learned]] the owner. They didn't [[leave|לעזוב|ליב|learned]] until it was dark. Maya [[thought|חשבה|ת'וט|learned]] it was a great day!"
         ],
-        audio: "Yesterday, Shoham and her family went to the park. The weather was very beautiful. They planned to have a picnic. Her dad bought a big pizza, and they ate it under a tree. After that, Shoham rode her bike and her brother watched a game. Suddenly, Shoham saw a small dog. She found the owner. They didn't leave until it was dark. Shoham thought it was a great day!",
+        audio: "Yesterday, Maya and her family went to the park. The weather was very beautiful. They planned to have a picnic. Her dad bought a big pizza, and they ate it under a tree. After that, Maya rode her bike and her brother watched a game. Suddenly, Maya saw a small dog. She found the owner. They didn't leave until it was dark. Maya thought it was a great day!",
         questions: [
-            { q: "Where did Shoham go yesterday?", options: ["To the school", "To the park", "To the store"], correct: 1 },
+            { q: "Where did Maya go yesterday?", options: ["To the school", "To the park", "To the store"], correct: 1 },
             { q: "What did her dad buy?", options: ["A dog", "A bike", "A pizza"], correct: 2 },
             { q: "Why didn't they leave early?", options: ["Because they had fun", "Because it was raining", "Because they were lost"], correct: 0 }
         ]
@@ -90,12 +102,16 @@ export default function App() {
     const [options, setOptions] = useState([]);
     const [activeAnim, setActiveAnim] = useState(null);
     const [isListening, setIsListening] = useState(false);
+    
+    // Audio toggling state
+    const [isSpeaking, setIsSpeaking] = useState(false);
 
     // Specific game states
     const [grammarIndex, setGrammarIndex] = useState(0);
     const [grammarSolved, setGrammarSolved] = useState(false);
     const [compIndex, setCompIndex] = useState(0);
     const [analogyIndex, setAnalogyIndex] = useState(0);
+    const [storyIndex, setStoryIndex] = useState(0);
     const [storyMode, setStoryMode] = useState('read');
     const [storyQuestionIndex, setStoryQuestionIndex] = useState(0);
     
@@ -109,6 +125,11 @@ export default function App() {
     useEffect(() => {
         localStorage.setItem('shoham_test_mastered', JSON.stringify(masteredIndexes));
     }, [masteredIndexes]);
+
+    // Cleanup audio when component unmounts
+    useEffect(() => {
+        return () => window.speechSynthesis.cancel();
+    }, []);
 
     // --- Helpers ---
     const playSound = (type) => {
@@ -132,12 +153,34 @@ export default function App() {
         setTimeout(() => setActiveAnim(null), 1500);
     };
 
-    const speak = (text) => {
+    const speak = (text, isStoryReading = false) => {
+        // Toggle off if it's already speaking the story
+        if (isStoryReading && isSpeaking) {
+            window.speechSynthesis.cancel();
+            setIsSpeaking(false);
+            return;
+        }
+
         window.speechSynthesis.cancel();
         const utt = new SpeechSynthesisUtterance(text);
         utt.lang = 'en-US';
         utt.rate = 0.8;
+        
+        if (isStoryReading) {
+            setIsSpeaking(true);
+            utt.onend = () => setIsSpeaking(false);
+            utt.onerror = () => setIsSpeaking(false);
+        }
+
         window.speechSynthesis.speak(utt);
+    };
+
+    // Custom view changer to ensure audio stops
+    const changeView = (newView) => {
+        window.speechSynthesis.cancel();
+        setIsSpeaking(false);
+        setView(newView);
+        setFeedback(null);
     };
 
     // --- Games Logic ---
@@ -150,7 +193,7 @@ export default function App() {
         setQuizSet(set);
         setQuizIndex(0);
         setQuizScore(0);
-        setView('quiz');
+        changeView('quiz');
     };
 
     const handleSpeech = () => {
@@ -182,9 +225,12 @@ export default function App() {
     };
 
     const renderStoryText = (text) => {
+        if (!text) return null;
         return text.split(/(\[\[.*?\]\])/g).map((part, i) => {
             if (part.startsWith('[[') && part.endsWith(']]')) {
-                const [word, he] = part.slice(2, -2).split('|');
+                const parts = part.slice(2, -2).split('|');
+                const word = parts[0];
+                const he = parts[1];
                 return (
                     <span key={i} className="font-bold text-pink-600 border-b-2 border-pink-200 cursor-help group relative px-1">
                         {word}
@@ -199,7 +245,7 @@ export default function App() {
     // --- UI Blocks ---
     const NavBtn = ({ icon, label, target, action }) => (
         <button 
-            onClick={() => { if(action) action(); else { setView(target); setFeedback(null); }}}
+            onClick={() => { if(action) action(); else changeView(target); }}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all ${view === target ? 'bg-pink-500 text-white shadow-lg scale-105' : 'bg-white text-slate-700 hover:bg-pink-50'}`}
         >
             <span>{icon}</span> {label}
@@ -227,10 +273,10 @@ export default function App() {
                     <div className="flex flex-wrap justify-center gap-3">
                         <NavBtn icon="🎓" label="למידה" target="learn" />
                         <NavBtn icon="📖" label="ספריה" target="library" />
-                        <NavBtn icon="⏳" label="דקדוק" target="grammar" action={() => { setView('grammar'); setGrammarSolved(false); }} />
+                        <NavBtn icon="⏳" label="דקדוק" target="grammar" action={() => { changeView('grammar'); setGrammarSolved(false); }} />
                         <NavBtn icon="🧩" label="מחסן מילים" target="completion" />
                         <NavBtn icon="🔗" label="אנלוגיות" target="analogies" />
-                        <NavBtn icon="📚" label="אנסין" target="story" action={() => { setView('story'); setStoryMode('read'); setStoryQuestionIndex(0); }} />
+                        <NavBtn icon="📚" label="אנסין" target="story" action={() => { changeView('story'); setStoryMode('read'); setStoryIndex(0); setStoryQuestionIndex(0); }} />
                         <NavBtn icon="🏆" label="בוחן" target="quiz" action={startQuiz} />
                     </div>
                 </header>
@@ -314,7 +360,7 @@ export default function App() {
                     )}
 
                     {/* 📚 UNSEEN VIEW */}
-                    {view === 'story' && (
+                    {view === 'story' && storiesData[storyIndex] && (
                         <div>
                             <h2 className="text-4xl font-black text-center text-orange-600 mb-8">{storiesData[storyIndex].title}</h2>
                             {storyMode === 'read' ? (
@@ -323,21 +369,37 @@ export default function App() {
                                         {storiesData[storyIndex].content.map((p, i) => <p key={i} className="mb-4">{renderStoryText(p)}</p>)}
                                     </div>
                                     <div className="flex justify-center gap-4">
-                                        <button onClick={() => speak(storiesData[storyIndex].audio)} className="bg-white border-2 border-orange-400 text-orange-600 px-8 py-3 rounded-xl font-bold">🔊 הקרא לי</button>
-                                        <button onClick={() => setStoryMode('questions')} className="bg-orange-500 text-white px-8 py-3 rounded-xl font-bold shadow-lg">📝 התחל שאלות</button>
+                                        <button 
+                                            onClick={() => speak(storiesData[storyIndex].audio, true)} 
+                                            className="bg-white border-2 border-orange-400 text-orange-600 px-8 py-3 rounded-xl font-bold transition-all w-48"
+                                        >
+                                            {isSpeaking ? '⏹️ עצור הקראה' : '🔊 הקרא לי'}
+                                        </button>
+                                        <button 
+                                            onClick={() => {
+                                                window.speechSynthesis.cancel();
+                                                setIsSpeaking(false);
+                                                setStoryMode('questions');
+                                            }} 
+                                            className="bg-orange-500 text-white px-8 py-3 rounded-xl font-bold shadow-lg"
+                                        >
+                                            📝 התחל שאלות
+                                        </button>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="bg-blue-50 p-8 rounded-2xl border-2 border-blue-200">
-                                    <p className="text-center text-slate-500 font-bold mb-4">שאלה {storyQuestionIndex + 1} מתוך 3</p>
+                                    <p className="text-center text-slate-500 font-bold mb-4">שאלה {storyQuestionIndex + 1} מתוך {storiesData[storyIndex].questions.length}</p>
                                     <h3 className="text-2xl font-black text-center mb-8" dir="ltr">{storiesData[storyIndex].questions[storyQuestionIndex].q}</h3>
                                     <div className="flex flex-col gap-4 max-w-md mx-auto">
                                         {storiesData[storyIndex].questions[storyQuestionIndex].options.map((opt, i) => (
                                             <button key={i} onClick={() => {
                                                 if (i === storiesData[storyIndex].questions[storyQuestionIndex].correct) {
                                                     playSound('success'); triggerAnim('success-check');
-                                                    if (storyQuestionIndex < 2) setStoryQuestionIndex(prev => prev + 1);
-                                                    else { triggerAnim('confetti'); setView('learn'); }
+                                                    if (storyQuestionIndex < storiesData[storyIndex].questions.length - 1) {
+                                                        setStoryQuestionIndex(prev => prev + 1);
+                                                    }
+                                                    else { triggerAnim('confetti'); changeView('learn'); }
                                                 } else playSound('error');
                                             }} className="p-4 bg-white border-2 border-blue-200 rounded-xl font-bold hover:bg-blue-500 hover:text-white transition-all text-center">{opt}</button>
                                         ))}
@@ -348,7 +410,7 @@ export default function App() {
                     )}
 
                     {/* 🏆 QUIZ VIEW */}
-                    {view === 'quiz' && (
+                    {view === 'quiz' && quizSet.length > 0 && quizSet[quizIndex] && (
                         <div className="text-center">
                             <p className="text-slate-400 font-bold mb-4">שאלה {quizIndex + 1} מתוך 10</p>
                             <h2 className="text-6xl font-black mb-12" dir="ltr">{quizSet[quizIndex].q}</h2>
@@ -359,7 +421,7 @@ export default function App() {
                                         if (isCorrect) setQuizScore(prev => prev + 1);
                                         playSound(isCorrect ? 'success' : 'error');
                                         if (quizIndex < 9) setQuizIndex(prev => prev + 1);
-                                        else { triggerAnim('confetti'); setView('learn'); }
+                                        else { triggerAnim('confetti'); changeView('learn'); }
                                     }} className="p-6 bg-pink-50 border-2 border-pink-100 rounded-2xl font-bold text-xl hover:bg-pink-500 hover:text-white transition-all">{opt}</button>
                                 ))}
                             </div>
@@ -372,7 +434,7 @@ export default function App() {
                             <h2 className="text-3xl font-black text-center text-rose-500 mb-8">הספריה למבחן 📚</h2>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-h-[60vh] overflow-y-auto p-2">
                                 {wordsData.map((w, i) => (
-                                    <div key={i} onClick={() => { setActiveWordIndex(i); setView('learn'); setStep(1); }} className={`p-4 rounded-xl border-2 transition-all cursor-pointer ${masteredIndexes.includes(i) ? 'bg-green-50 border-green-200' : 'bg-rose-50 border-rose-100'}`}>
+                                    <div key={i} onClick={() => { setActiveWordIndex(i); changeView('learn'); setStep(1); }} className={`p-4 rounded-xl border-2 transition-all cursor-pointer ${masteredIndexes.includes(i) ? 'bg-green-50 border-green-200' : 'bg-rose-50 border-rose-100'}`}>
                                         <p className="font-black" dir="ltr">{w.en}</p>
                                         <p className="text-sm text-slate-500">{w.he}</p>
                                     </div>
@@ -381,7 +443,7 @@ export default function App() {
                         </div>
                     )}
 
-                    {/* 🃏 MATCH VIEW (SKELETON - USES SAME LOGIC) */}
+                    {/* 🃏 ANALOGIES VIEW */}
                     {view === 'analogies' && (
                          <div className="text-center">
                              <h2 className="text-3xl font-black text-fuchsia-700 mb-8">אנלוגיות עבר פשוט</h2>
