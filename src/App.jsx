@@ -1,826 +1,194 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// --- Advanced 7th-8th Grade Words ---
+// --- Vocabulary: STRICTLY 6th Grade Test Material (from the doc) ---
 const wordsData = [
-  // Phrasal Verbs
-  { en: "Give up", he: "להתייאש / להשתמט" },
-  { en: "Look forward to", he: "ציפייה לקידום / תקווה" },
-  { en: "Put off", he: "לדחות / להתנגד" },
-  { en: "Carry on", he: "להמשיך / לעמוד בעמדה" },
-  { en: "Come across", he: "להיתקל בו / להימצא" },
-  { en: "Figure out", he: "להבין / לחשוב" },
-  { en: "Break down", he: "להתנתק / להישבר" },
-  { en: "Bring up", he: "להעלות / לגדל" },
+    // Irregular Verbs (V1 - V2)
+    { en: "see - saw", he: "לראות - ראה" },
+    { en: "have - had", he: "יש - היה" },
+    { en: "know - knew", he: "לדעת - ידע" },
+    { en: "get - got", he: "לקבל/להשיג - קיבל" },
+    { en: "ride - rode", he: "לרכוב - רכב" },
+    { en: "win - won", he: "לנצח - ניצח" },
+    { en: "find - found", he: "למצוא - מצא" },
+    { en: "leave - left", he: "לעזוב - עזב" },
+    { en: "buy - bought", he: "לקנות - קנה" },
+    { en: "cut - cut", he: "לחתוך - חתך (ללא שינוי)" },
+    { en: "go - went", he: "ללכת - הלך" },
+    { en: "think - thought", he: "לחשוב - חשב" },
+    { en: "eat - ate", he: "לאכול - אכל" },
 
-  // Connectors & Abstract Concepts
-  { en: "Although", he: "אף על פי שלא" },
-  { en: "However", he: "עם זאת" },
-  { en: "Therefore", he: "לכן / בגלל זה" },
-  { en: "Meanwhile", he: "בינתיים / באותו זמן" },
-  { en: "Eventually", he: "בסוף / בסופו של דבר" },
-  { en: "Opportunity", he: "הזדמנות" },
-  { en: "Essential", he: "חיוני / הכרחי" },
-  { en: "Achieve", he: "להשיג / לעלות" },
+    // Regular Verbs
+    { en: "save - saved", he: "לשמור/להציל - שמר" },
+    { en: "watch - watched", he: "לצפות - צפה" },
+    { en: "plan - planned", he: "לתכנן - תכנן (הכפלת אות)" },
 
-  // Complex Adjectives & Verbs
-  { en: "Persistent", he: "עקשן / ניצור" },
-  { en: "Vulnerable", he: "חלוש / בסכנה" },
-  { en: "Resilient", he: "חוסן / יכול להתאושש" },
-  { en: "Ambitious", he: "שאפתני" },
-  { en: "Contemplate", he: "לחשוב בעמוקות" },
-  { en: "Acknowledge", he: "להודות / להכיר" },
-  { en: "Persevere", he: "להמשיך להשתדל" },
-  { en: "Accomplish", he: "להשלים / להגשים" },
-  { en: "Determine", he: "להחליט / לקבוע" },
-  { en: "Remarkable", he: "ראוי להערה / מעניין" },
-  { en: "Reluctant", he: "לא רוצה / סרוג" },
-  { en: "Profound", he: "עמוק / משמעותי" },
-  { en: "Inevitable", he: "בלתי נמנע" },
-  { en: "Advocate", he: "לתמוך בעד / תומך" },
-  { en: "Meticulous", he: "זהיר מאוד / מדויק" },
-  { en: "Perceive", he: "להבחין / להרגיש" },
-  { en: "Flourish", he: "לשגשג / להתפתח" },
-  { en: "Compromise", he: "פשרה / להסכים" },
-  { en: "Reluctance", he: "אי-רצון / קושי" },
-  { en: "Diligent", he: "חרוץ / שקדן" }
+    // To Be (was/were)
+    { en: "was / wasn't", he: "היה / לא היה (ליחיד)" },
+    { en: "were / weren't", he: "היו / לא היו (לרבים)" }
 ];
 
-// --- Builder Data (7th-8th Grade Advanced) ---
-const builderData = [
-    // Compound Words
-    { type: "compound", part1: "Sun", part1Meaning: "שמש", part2: "Flower", part2Meaning: "פרח", word: "Sunflower", options: ["כלנית", "חמנייה", "ורד"], correct: 1, explanation: "פרח השמש - חמנייה שפונה אל השמש." },
-    { type: "compound", part1: "Snow", part1Meaning: "שלג", part2: "Man", part2Meaning: "איש", word: "Snowman", options: ["גשם", "חורף", "איש שלג"], correct: 2, explanation: "איש שעשוי משלג = איש שלג." },
-    { type: "compound", part1: "Bed", part1Meaning: "מיטה", part2: "Room", part2Meaning: "חדר", word: "Bedroom", options: ["סלון", "חדר שינה", "מטבח"], correct: 1, explanation: "החדר שבו נמצאת המיטה = חדר שינה." },
-    { type: "compound", part1: "Rain", part1Meaning: "גשם", part2: "Bow", part2Meaning: "קשת", word: "Rainbow", options: ["קשת בענן", "מטריה", "שלולית"], correct: 0, explanation: "הקשת שמופיעה אחרי הגשם = קשת בענן." },
-    { type: "compound", part1: "Note", part1Meaning: "פתק", part2: "Book", part2Meaning: "ספר", word: "Notebook", options: ["מחשב", "מחברת", "מכתב"], correct: 1, explanation: "ספר שכותבים בו פתקים/הערות = מחברת." },
-    { type: "compound", part1: "Play", part1Meaning: "לשחק", part2: "Ground", part2Meaning: "אדמה", word: "Playground", options: ["גן שעשועים", "כדורגל", "פארק מים"], correct: 0, explanation: "המקום (אדמה) שבו משחקים = גן שעשועים." },
-    { type: "compound", part1: "Class", part1Meaning: "שיעור", part2: "Room", part2Meaning: "חדר", word: "Classroom", options: ["הפסקה", "כיתה", "בית ספר"], correct: 1, explanation: "החדר שבו לומדים את השיעור = כיתה." },
-    { type: "compound", part1: "Water", part1Meaning: "מים", part2: "Melon", part2Meaning: "מלון", word: "Watermelon", options: ["תפוח", "אבטיח", "ענבים"], correct: 1, explanation: "פרי שמלא במים = אבטיח." },
-
-    // Advanced Prefixes
-    { type: "prefix", prefix: "Un", root: "Happy", rootMeaning: "שמח", word: "Unhappy", options: ["עצוב / לא שמח", "מאוד שמח", "צוחק"], correct: 0, explanation: "הקידומת Un הופכת את המילה לשלילית. לא-שמח = עצוב." },
-    { type: "prefix", prefix: "Re", root: "Read", rootMeaning: "לקרוא", word: "Reread", options: ["לכתוב", "לקרוא שוב", "לשכוח"], correct: 1, explanation: "הקידומת Re אומרת 'לעשות שוב'." },
-    { type: "prefix", prefix: "Dis", root: "Agree", rootMeaning: "להסכים", word: "Disagree", options: ["להסכים מאוד", "לא להסכים", "להתווכח"], correct: 1, explanation: "הקידומת Dis מציינת הפך או חוסר הסכמה." },
-    { type: "prefix", prefix: "Mis", root: "Understand", rootMeaning: "להבין", word: "Misunderstand", options: ["להבין בצורה שגויה", "להבין במהירות", "להבין לעומק"], correct: 0, explanation: "הקידומת Mis אומרת 'לעשות בצורה שגויה'." },
-    { type: "prefix", prefix: "Over", root: "Think", rootMeaning: "לחשוב", word: "Overthink", options: ["לחשוב מעט", "לחשוב יותר מידי", "לא לחשוב"], correct: 1, explanation: "הקידומת Over אומרת 'יותר מידי' או 'יתר על המידה'." },
-    { type: "prefix", prefix: "Under", root: "Stand", rootMeaning: "לעמוד", word: "Understand", options: ["לעמוד תחת", "להבין", "להיות מתחת"], correct: 1, explanation: "Under במשמעות רחוקה אומרת 'להבין' - כמו 'עמידה בתוך'." },
-    { type: "prefix", prefix: "Pre", root: "Plan", rootMeaning: "לתכנן", word: "Preplan", options: ["תכנון מראש", "תכנון חוזר", "ביטול תכנון"], correct: 0, explanation: "הקידומת Pre אומרת 'לפני' או 'מראש'." },
-    { type: "prefix", prefix: "Non", root: "Fiction", rootMeaning: "בדיוני", word: "Nonfiction", options: ["ספרות בדיוני", "ספרות מציאותית", "סיפור בדיוני"], correct: 1, explanation: "הקידומת Non אומרת 'לא' או 'ללא'." }
+// --- Grammar Builder: Past Simple Rules (Challenging & Educational) ---
+const grammarData = [
+    { prompt: "I (go) to the park yesterday.", options: ["went", "goed", "go"], correct: 0, rule: "הפועל go הוא יוצא דופן ובעבר הופך ל-went." },
+    { prompt: "She (not/see) the movie last night.", options: ["didn't saw", "didn't see", "wasn't see"], correct: 1, rule: "במשפט שלילה בעבר משתמשים ב-didn't ואז הפועל נשאר בצורת המקור (V1)!" },
+    { prompt: "___ they happy yesterday?", options: ["Did", "Was", "Were"], correct: 2, rule: "לגוף 'הם' (They) משתמשים ב-Were בעבר." },
+    { prompt: "Dan (plan) a big party.", options: ["planed", "planned", "plant"], correct: 1, rule: "בפועל קצר שמסתיים באות ניקוד ועיצור (P-L-A-N), מכפילים את האות האחרונה: planned." },
+    { prompt: "___ he buy a new car?", options: ["Did", "Was", "Does"], correct: 0, rule: "שאלת כן/לא בעבר על פעולה מתחילה ב-Did. הפועל נשאר בצורת המקור." },
+    { prompt: "We (buy) a lot of food.", options: ["buyed", "bought", "buy"], correct: 1, rule: "הפועל buy הוא יוצא דופן והופך בעבר ל-bought." },
+    { prompt: "I (not/be) tired yesterday.", options: ["didn't be", "wasn't", "weren't"], correct: 1, rule: "הפועל To Be בעבר בשלילה (ליחיד) הוא wasn't." },
+    { prompt: "She (cut) the cake.", options: ["cutted", "cut", "cat"], correct: 1, rule: "הפועל cut הוא מיוחד - הוא נשאר זהה גם בהווה וגם בעבר!" }
 ];
 
-// --- Analogies Data (Advanced 7th-8th Grade) ---
+// --- Analogies Data (Past Simple logic) ---
 const analogiesData = [
-    // Basic relationships (original)
-    { word1: "Dog", word2: "Animal", relation: "סוג של...", word3: "Apple", options: ["Food", "Drink", "Color", "Toy"], correct: "Food" },
-    { word1: "Big", word2: "Small", relation: "הפכים (Opposites)", word3: "Hot", options: ["Cold", "Warm", "Red", "Sun"], correct: "Cold" },
-    { word1: "Happy", word2: "Sad", relation: "הפכים (Opposites)", word3: "Fast", options: ["Slow", "Run", "Jump", "Play"], correct: "Slow" },
-    { word1: "Boy", word2: "Girl", relation: "זכר ונקבה", word3: "Man", options: ["Woman", "Baby", "Father", "Mother"], correct: "Woman" },
-    { word1: "Day", word2: "Night", relation: "הפכים", word3: "Sun", options: ["Moon", "Star", "Sky", "Tree"], correct: "Moon" },
-    { word1: "Eye", word2: "See", relation: "איבר והפעולה שלו", word3: "Ear", options: ["Listen", "Speak", "Eat", "Run"], correct: "Listen" },
-    { word1: "White", word2: "Black", relation: "צבעים הופכיים", word3: "Good", options: ["Bad", "Happy", "Clean", "Dirty"], correct: "Bad" },
-    { word1: "Drink", word2: "Water", relation: "פעולה ומה שעושים איתו", word3: "Eat", options: ["Pizza", "Book", "Pen", "Table"], correct: "Pizza" },
-
-    // Advanced relationships
-    { word1: "Optimism", word2: "Hope", relation: "רגשות מופשטים דומים", word3: "Courage", options: ["Fear", "Strength", "Wisdom", "Doubt"], correct: "Strength" },
-    { word1: "Author", word2: "Novel", relation: "יוצר ויצירה", word3: "Composer", options: ["Song", "Music", "Orchestra", "Symphony"], correct: "Symphony" },
-    { word1: "Reluctance", word2: "Hesitation", relation: "תחושות דומות", word3: "Perseverance", options: ["Weakness", "Confidence", "Determination", "Doubt"], correct: "Determination" },
-    { word1: "Root", word2: "Tree", relation: "חלק מכל", word3: "Page", options: ["Book", "Paper", "Ink", "Cover"], correct: "Book" },
-    { word1: "Triumph", word2: "Victory", relation: "מילים דומות במשמעות", word3: "Struggle", options: ["Effort", "Challenge", "Defeat", "Pain"], correct: "Defeat" },
-    { word1: "Fragile", word2: "Resilient", relation: "הפכים בחוזק", word3: "Ignorant", options: ["Knowledgeable", "Wise", "Smart", "Educated"], correct: "Knowledgeable" },
-    { word1: "Mentor", word2: "Student", relation: "יחסי כוח ולמידה", word3: "Employer", options: ["Employee", "Boss", "Manager", "Owner"], correct: "Employee" },
-    { word1: "Persevere", word2: "Quit", relation: "הפכים בהתמדה", word3: "Embrace", options: ["Reject", "Accept", "Adopt", "Welcome"], correct: "Reject" }
+    { word1: "Go", word2: "Went", relation: "הווה לעבר", word3: "See", options: ["Saw", "Seen", "Seed", "Seeing"], correct: "Saw" },
+    { word1: "Buy", word2: "Bought", relation: "הווה לעבר", word3: "Think", options: ["Thinked", "Thought", "Thank", "Thinks"], correct: "Thought" },
+    { word1: "I / He / She", word2: "Was", relation: "התאמת פועל עזר", word3: "We / You / They", options: ["Was", "Is", "Were", "Are"], correct: "Were" },
+    { word1: "Eat", word2: "Didn't eat", relation: "חיוב לשלילה", word3: "Ride", options: ["Rode", "Didn't ride", "Didn't rode", "Not ride"], correct: "Didn't ride" },
+    { word1: "Watch", word2: "Watched", relation: "פועל רגיל", word3: "Save", options: ["Saved", "Saveed", "Sove", "Saven"], correct: "Saved" },
+    { word1: "Find", word2: "Found", relation: "V1 -> V2", word3: "Know", options: ["Knew", "Knowed", "Known", "Knews"], correct: "Knew" }
 ];
 
-// --- Sentence Completion Data (Advanced 7th-8th Grade Context-Heavy) ---
+// --- Word Bank Completion (Test format) ---
 const completionData = [
-    { sentence: "I eat an _______ every morning because it is healthy.", options: ["Apple", "Book", "Dog", "Shoe"], correct: "Apple" },
-    { sentence: "Please _______ the door, it is very cold outside.", options: ["Close", "Open", "Buy", "Run"], correct: "Close" },
-    { sentence: "My _______ has four legs and says 'Woof!'.", options: ["Dog", "Fish", "Bird", "Teacher"], correct: "Dog" },
-    { sentence: "I need a _______ to write my name on the paper.", options: ["Pen", "Chair", "Tree", "Apple"], correct: "Pen" },
-    { sentence: "When I am thirsty after running, I drink _______.", options: ["Water", "Bread", "Cake", "Cheese"], correct: "Water" },
-    { sentence: "I am very tired today. I want to _______ in my bed.", options: ["Sleep", "Jump", "Run", "Eat"], correct: "Sleep" },
-    { sentence: "The _______ is yellow and it makes the day hot.", options: ["Sun", "Moon", "Snow", "Rain"], correct: "Sun" },
-    { sentence: "I like to _______ a good story book before I go to sleep.", options: ["Read", "Write", "Listen", "Speak"], correct: "Read" },
-    { sentence: "I use my eyes to see, and my _______ to listen to music.", options: ["Ear", "Nose", "Hand", "Foot"], correct: "Ear" },
-    { sentence: "My shirt is _______ because I played in the mud.", options: ["Dirty", "Clean", "New", "White"], correct: "Dirty" },
-
-    // Advanced completions
-    { sentence: "Despite her initial _______, she eventually found confidence speaking in public.", options: ["enthusiasm", "trepidation", "joy", "knowledge"], correct: "trepidation" },
-    { sentence: "His _______ attitude about climate change contradicts the scientific evidence.", options: ["concerned", "optimistic", "dismissive", "passionate"], correct: "dismissive" },
-    { sentence: "The _______ scientist refused to _______ her findings even when facing intense criticism from peers.", options: ["hesitant", "determined abandon", "timid", "reluctant"], correct: "determined abandon" },
-    { sentence: "Her _______ approach to research, combined with her _______ to detail, earned her international recognition.", options: ["careless", "meticulous rigorous", "sloppy", "casual"], correct: "meticulous rigorous" },
-    { sentence: "The committee had to _______ that their initial _______ was based on incomplete data.", options: ["deny", "acknowledge misunderstanding", "reject", "ignore"], correct: "acknowledge misunderstanding" },
-    { sentence: "His _______ behavior throughout the conflict _______ his colleagues, who expected him to take a stronger stance.", options: ["bold", "reluctant disappointed", "aggressive", "determined"], correct: "reluctant disappointed" }
+    { sentence: "They _______ a great movie last night.", bank: ["went", "watched", "bought", "were"], correct: "watched" },
+    { sentence: "Shoham didn't _______ to the park because it rained.", bank: ["go", "went", "saw", "was"], correct: "go" },
+    { sentence: "I _______ very happy when I passed the test.", bank: ["did", "were", "was", "had"], correct: "was" },
+    { sentence: "We _______ a new computer at the store.", bank: ["knew", "bought", "left", "thought"], correct: "bought" },
+    { sentence: "_______ she ride her bike yesterday?", bank: ["Was", "Did", "Were", "Do"], correct: "Did" },
+    { sentence: "He _______ the door open when he left.", bank: ["found", "left", "saw", "planned"], correct: "left" }
 ];
 
-// --- Verbs & Tenses Data (Comprehensive Advanced) ---
-const verbsData = [
-    {
-        infinitive: "Persist",
-        hebrew: "להתמיד",
-        exercises: [
-            { sentence: "She _______ through challenges every day.", options: ["persist", "persists", "persisted", "is persisting"], correct: "persists", tense: "Present Simple", explanation: "He/She/It - מוסיפים s" },
-            { sentence: "He _______ in his efforts yesterday.", options: ["persists", "persist", "persisted", "will persist"], correct: "persisted", tense: "Past Simple", explanation: "עבר משונה - הוסיפו ed" },
-            { sentence: "They _______ right now despite obstacles.", options: ["persist", "persists", "are persisting", "will persist"], correct: "are persisting", tense: "Present Continuous", explanation: "עכשיו - be + verb+ing" },
-            { sentence: "She _______ for five years already.", options: ["persists", "persisted", "has persisted", "will persist"], correct: "has persisted", tense: "Present Perfect", explanation: "עד עכשיו - have/has + past participle" },
-            { sentence: "By next year, they _______ for a decade.", options: ["will persist", "persists", "have persisted", "will have persisted"], correct: "will have persisted", tense: "Future Perfect", explanation: "עתיד - will have + past participle" }
-        ]
-    },
-    {
-        infinitive: "Accomplish",
-        hebrew: "להשלים",
-        exercises: [
-            { sentence: "He _______ his goals through hard work.", options: ["accomplish", "accomplishes", "accomplished", "will accomplish"], correct: "accomplishes", tense: "Present Simple", explanation: "Present - He/She/It מקבל s" },
-            { sentence: "She _______ what seemed impossible last month.", options: ["accomplish", "accomplishes", "accomplished", "will accomplish"], correct: "accomplished", tense: "Past Simple", explanation: "Past - ed בסוף" },
-            { sentence: "We _______ great things together right now.", options: ["accomplish", "accomplishes", "are accomplishing", "will accomplish"], correct: "are accomplishing", tense: "Present Continuous", explanation: "עכשיו בתהליך - be + ing" },
-            { sentence: "By graduation, he _______ all his objectives.", options: ["accomplishes", "accomplished", "has accomplished", "will have accomplished"], correct: "will have accomplished", tense: "Future Perfect", explanation: "עתיד מושלם" },
-            { sentence: "They _______ more than anyone expected by now.", options: ["accomplish", "accomplishes", "have accomplished", "will accomplish"], correct: "have accomplished", tense: "Present Perfect", explanation: "מהעבר עד עכשיו - have + past participle" }
-        ]
-    },
-    {
-        infinitive: "Flourish",
-        hebrew: "לשגשג",
-        exercises: [
-            { sentence: "The garden _______ in spring every year.", options: ["flourish", "flourishes", "flourished", "is flourishing"], correct: "flourishes", tense: "Present Simple", explanation: "תופעה קבועה - 3 יחיד s" },
-            { sentence: "The business _______ during that economic period.", options: ["flourish", "flourishes", "flourished", "will flourish"], correct: "flourished", tense: "Past Simple", explanation: "עבר - ed" },
-            { sentence: "Her talents _______ in this supportive environment.", options: ["flourish", "flourishes", "are flourishing", "will flourish"], correct: "are flourishing", tense: "Present Continuous", explanation: "בתהליך עכשיו - be + ing" },
-            { sentence: "The project _______ since we started supporting it.", options: ["flourishes", "flourished", "has flourished", "will flourish"], correct: "has flourished", tense: "Present Perfect", explanation: "מתחילת התהליך עד עכשיו" },
-            { sentence: "If conditions improve, the ecosystem _______ again.", options: ["flourish", "flourishes", "flourished", "will flourish"], correct: "will flourish", tense: "Future Simple", explanation: "עתיד - will + infinitive" }
-        ]
-    },
-    {
-        infinitive: "Contemplate",
-        hebrew: "לחשוב בעמוקות",
-        exercises: [
-            { sentence: "She _______ the meaning of the philosophical text.", options: ["contemplate", "contemplates", "contemplated", "is contemplating"], correct: "contemplates", tense: "Present Simple", explanation: "הרגלה - 3 יחיד s" },
-            { sentence: "They _______ the complex problem for hours yesterday.", options: ["contemplate", "contemplates", "contemplated", "will contemplate"], correct: "contemplated", tense: "Past Simple", explanation: "עבר - ed" },
-            { sentence: "He _______ his life decisions at this very moment.", options: ["contemplate", "contemplates", "is contemplating", "will contemplate"], correct: "is contemplating", tense: "Present Continuous", explanation: "עכשיו - am/is/are + ing" },
-            { sentence: "We _______ this issue since our last meeting.", options: ["contemplate", "contemplates", "have contemplated", "will contemplate"], correct: "have contemplated", tense: "Present Perfect", explanation: "מאז הפגישה - have + ed" },
-            { sentence: "By the deadline, they _______ all possible solutions.", options: ["contemplates", "contemplated", "will have contemplated", "are contemplating"], correct: "will have contemplated", tense: "Future Perfect", explanation: "עד הזמן הקבוע - will have + ed" }
-        ]
-    },
-    {
-        infinitive: "Acknowledge",
-        hebrew: "להודות",
-        exercises: [
-            { sentence: "The teacher _______ her student's exceptional effort.", options: ["acknowledge", "acknowledges", "acknowledged", "will acknowledge"], correct: "acknowledges", tense: "Present Simple", explanation: "כל יום - 3 יחיד s" },
-            { sentence: "The jury _______ the witness's credibility yesterday.", options: ["acknowledge", "acknowledges", "acknowledged", "will acknowledge"], correct: "acknowledged", tense: "Past Simple", explanation: "עבר - ed" },
-            { sentence: "Scientists _______ the validity of the new research right now.", options: ["acknowledge", "acknowledges", "are acknowledging", "will acknowledge"], correct: "are acknowledging", tense: "Present Continuous", explanation: "בתהליך - be + ing" },
-            { sentence: "They _______ the problem since it first emerged.", options: ["acknowledge", "acknowledges", "have acknowledged", "will acknowledge"], correct: "have acknowledged", tense: "Present Perfect", explanation: "מאז ההופעה - have + ed" },
-            { sentence: "By next conference, they _______ all contributions.", options: ["acknowledges", "acknowledged", "will have acknowledged", "are acknowledging"], correct: "will have acknowledged", tense: "Future Perfect", explanation: "עד הכנס - will have + ed" }
-        ]
-    },
-    {
-        infinitive: "Determine",
-        hebrew: "להחליט / לקבוע",
-        exercises: [
-            { sentence: "The test _______ who advances to the next level annually.", options: ["determine", "determines", "determined", "will determine"], correct: "determines", tense: "Present Simple", explanation: "כל שנה - 3 יחיד s" },
-            { sentence: "The committee _______ the outcome of the competition last week.", options: ["determine", "determines", "determined", "will determine"], correct: "determined", tense: "Past Simple", explanation: "עבר - ed" },
-            { sentence: "Your choices _______ your future path right now.", options: ["determine", "determines", "are determining", "will determine"], correct: "are determining", tense: "Present Continuous", explanation: "בתהליך - be + ing" },
-            { sentence: "Scientists _______ the cause of the phenomenon for months.", options: ["determines", "determined", "have determined", "will determine"], correct: "have determined", tense: "Present Perfect", explanation: "בחודשים האחרונים - have + ed" },
-            { sentence: "By the end of the year, they _______ the solution.", options: ["determines", "determined", "will have determined", "are determining"], correct: "will have determined", tense: "Future Perfect", explanation: "עד סוף השנה - will have + ed" }
-        ]
-    },
-    {
-        infinitive: "Perceive",
-        hebrew: "להבחין / להרגיש",
-        exercises: [
-            { sentence: "She _______ subtle changes in her environment constantly.", options: ["perceive", "perceives", "perceived", "will perceive"], correct: "perceives", tense: "Present Simple", explanation: "באופן קבוע - 3 יחיד s" },
-            { sentence: "He _______ the danger before anyone else did.", options: ["perceive", "perceives", "perceived", "will perceive"], correct: "perceived", tense: "Past Simple", explanation: "עבר - ed" },
-            { sentence: "We _______ the shift in the community's attitude today.", options: ["perceive", "perceives", "are perceiving", "will perceive"], correct: "are perceiving", tense: "Present Continuous", explanation: "עכשיו - be + ing" },
-            { sentence: "They _______ the problem's complexity since they started.", options: ["perceives", "perceived", "have perceived", "will perceive"], correct: "have perceived", tense: "Present Perfect", explanation: "מתחילת העבודה - have + ed" },
-            { sentence: "By studying carefully, you _______ deeper patterns.", options: ["perceives", "perceived", "will have perceived", "are perceiving"], correct: "will have perceived", tense: "Future Perfect", explanation: "אחרי לימוד - will have + ed" }
-        ]
-    },
-    {
-        infinitive: "Advocate",
-        hebrew: "לתמוך בעד",
-        exercises: [
-            { sentence: "She _______ for environmental protection in every speech.", options: ["advocate", "advocates", "advocated", "will advocate"], correct: "advocates", tense: "Present Simple", explanation: "תמיד - 3 יחיד s" },
-            { sentence: "They _______ for equal rights throughout history.", options: ["advocate", "advocates", "advocated", "will advocate"], correct: "advocated", tense: "Past Simple", explanation: "עבר - ed" },
-            { sentence: "The organization _______ for policy change at this moment.", options: ["advocate", "advocates", "are advocating", "will advocate"], correct: "are advocating", tense: "Present Continuous", explanation: "עכשיו - be + ing" },
-            { sentence: "He _______ for reform since the beginning of his career.", options: ["advocates", "advocated", "has advocated", "will advocate"], correct: "has advocated", tense: "Present Perfect", explanation: "מתחילת הקריירה - have + ed" },
-            { sentence: "By the next election, they _______ for these changes.", options: ["advocates", "advocated", "will have advocated", "are advocating"], correct: "will have advocated", tense: "Future Perfect", explanation: "עד הבחירות - will have + ed" }
-        ]
-    },
-    {
-        infinitive: "Compromise",
-        hebrew: "לפשר / להסכים",
-        exercises: [
-            { sentence: "Negotiators _______ on key issues to reach agreement.", options: ["compromise", "compromises", "compromised", "will compromise"], correct: "compromise", tense: "Present Simple", explanation: "מה שהם עושים - plural compromise" },
-            { sentence: "The two sides _______ after weeks of discussion.", options: ["compromise", "compromises", "compromised", "will compromise"], correct: "compromised", tense: "Past Simple", explanation: "עבר - ed" },
-            { sentence: "The committee _______ on the budget proposal right now.", options: ["compromise", "compromises", "is compromising", "will compromise"], correct: "is compromising", tense: "Present Continuous", explanation: "בתהליך - be + ing" },
-            { sentence: "We _______ on this matter since our first discussion.", options: ["compromises", "compromised", "have compromised", "will compromise"], correct: "have compromised", tense: "Present Perfect", explanation: "מהדיון הראשון - have + ed" },
-            { sentence: "By next month, they _______ on all outstanding issues.", options: ["compromises", "compromised", "will have compromised", "are compromising"], correct: "will have compromised", tense: "Future Perfect", explanation: "עד חודש - will have + ed" }
-        ]
-    }
-];
-
-// --- Multi-Story Data with Tooltip Parsing Format ---
-// Format: [[Word|Hebrew Translation|Hebrew Pronunciation|StyleCategory]]
+// --- Reading Comprehension (Unseen) ---
 const storiesData = [
     {
-        title: "The Power of Words 📚",
+        title: "The Weekend Adventure 🌳",
         content: [
-            "Shoham had always been [[reluctant|לא רוצה|רילוקטנט|new]] to [[advocate|לתמוך בעד|אדוקיט|new]] for her own [[ideas|רעיונות|אידיאס|new]]. Her [[profound|עמוק|פרופאונד|new]] [[thoughts|מחשבות|תאטס|new]] remained hidden inside, locked away by [[fear|פחד|פיר|learned]].",
-            "One [[day|יום|דיי|learned]], her [[teacher|מורה|טיצ'ר|new]] asked her to [[determine|להחליט|דיטרמיין|learned]] the [[meaning|משמעות|מינינג|new]] of a complex [[poem|שיר|פוואם|new]]. When she [[hesitate|היססה|הזיטיט|new]], the [[teacher|מורה|טיצ'ר|new]] [[perceive|הבחין|פרסיווו|learned]] her [[vulnerability|חולשה|וולנרביליטי|new]]: 'Your [[silence|שקט|סיילנס|new]] shows you're [[contemplating|חושבת|קונטמפליטינג|learned]] deeply.'",
-            "Slowly, Shoham began to [[acknowledge|להודות|אקנאלדג'|learned]] that her [[reluctance|אי-רצון|רילוקטנס|new]] was really [[fear|פחד|פיר|learned]] of [[judgment|שיפוט|ג'אדג'מנט|new]]. But her [[perseverance|התמדה|פרסיוורנס|new]] to [[overcome|להתגבר על|אוברקום|new]] it ultimately helped her [[flourish|לשגשג|פלוריש|learned]]."
+            "Yesterday, Shoham and her family [[went|הלכו|וונט|learned]] to the park. The weather [[was|היה|ווז|learned]] very beautiful. They [[planned|תכננו|פלאנד|learned]] to have a picnic.",
+            "Her dad [[bought|קנה|בוט|learned]] a big pizza, and they [[ate|אכלו|אייט|learned]] it under a tree. After that, Shoham [[rode|רכבה|רוד|learned]] her bike and her brother [[watched|צפה|ווטצ'ד|learned]] a game.",
+            "Suddenly, Shoham [[saw|ראתה|סו|learned]] a small dog. She [[found|מצאה|פאונד|learned]] the owner. They didn't [[leave|לעזוב|ליב|learned]] until it was dark. Shoham [[thought|חשבה|ת'וט|learned]] it was a great day!"
         ],
-        audio: "Shoham had always been reluctant to advocate for her own ideas. Her profound thoughts remained hidden inside, locked away by fear. One day, her teacher asked her to determine the meaning of a complex poem. When she hesitated, the teacher perceived her vulnerability: Your silence shows you're contemplating deeply. Slowly, Shoham began to acknowledge that her reluctance was really fear of judgment. But her perseverance to overcome it ultimately helped her flourish."
-    },
-    {
-        title: "Breaking Stereotypes 💪",
-        content: [
-            "Everyone [[assume|הניחו|אסיום|new]] Shoham [[couldn't|לא יכלה|קודנט|new]] excel at [[math|מתמטיקה|מאט|new]] because she [[always|תמיד|אלווייז|learned]] [[struggled|התקשתה|סטראגלד|new]] with [[numbers|מספרים|נאמברס|new]]. Her [[peers|עמיתים|פיירס|new]] even [[perceive|ראו|פרסיווו|learned]] her as [[vulnerable|חלוש|וולנרראבל|new]] in [[academic|אקדמי|אקידימיק|new]] [[settings|מצבים|סטינגס|new]].",
-            "But Shoham [[determine|החליטה|דיטרמיינד|learned]] to [[challenge|לאתגר|צ'אלנג'|new]] their [[assumption|הנחה|אסמשן|new]]. She [[persevere|התמדה|פרסיווור|learned]] through [[frustration|תסכול|פרוסטריישן|new]] and [[contemplate|חשבה|קונטמפליטד|learned]] new [[strategies|אסטרטגיות|סטראטג'יז|new]]. Her [[meticulous|זהיר מאוד|מטיקיולוס|new]] [[approach|גישה|אפרוץ'|new]] began to [[flourish|שגשג|פלוריש|learned]].",
-            "When she finally [[accomplish|השלימה|אקומפליש|learned]] a [[remarkable|ראוי להערה|רימארקאבל|new]] [[score|ציון|סקור|new]], her [[classmates|תלמידים|קלאסמייטס|new]] [[acknowledge|הודו|אקנאלדג'|learned]] her [[resilience|חוסני|רזיליאנס|new]]. She had [[prove|הוכיחה|פרוווו|learned]] that [[stereotype|סטריאוטיפ|סטריאוטייפ|new]] are just obstacles to [[overcome|להתגבר על|אוברקום|new]]."
-        ],
-        audio: "Everyone assumed Shoham couldn't excel at math because she always struggled with numbers. Her peers even perceived her as vulnerable in academic settings. But Shoham determined to challenge their assumption. She persevered through frustration and contemplated new strategies. Her meticulous approach began to flourish. When she finally accomplished a remarkable score, her classmates acknowledged her resilience. She had proven that stereotypes are just obstacles to overcome."
-    },
-    {
-        title: "The Weight of Choices 🔀",
-        content: [
-            "Shoham [[face|עומדת בפני|פייס|new]] a [[profound|עמוק|פרופאונד|new]] [[dilemma|דילמה|דיילמה|new]]. She had two [[opportunity|הזדמנות|אפורטיוניטי|new]] - one [[provide|מספקת|פרוווייד|new]] [[security|בטחון|סיקיוריטי|new]], the other [[require|דורשת|ריקוואייר|new]] [[perseverance|התמדה|פרסיוורנס|new]] and [[ambition|שאיפה|אמביישן|new]]. Her [[mentor|מנחה|מנטור|new]] told her: 'The [[inevitable|בלתי נמנע|ינוויטאבל|new]] [[consequence|תוצאה|קונסיקונס|new]] of [[safe|בטוח|סייף|new]] [[choice|בחירה|צ'ויס|new]] is [[mediocre|בינוני|মিডিওকר|new]] [[accomplishment|הישג|אקומפלישמנט|new]].'",
-            "Shoham [[contemplate|חשבה|קונטמפליטד|learned]] for days. She felt [[vulnerable|חלוש|וולנרראבל|new]] about taking the [[risk|סיכון|ריסק|new]], but she [[acknowledge|הודתה|אקנאלדג'|learned]] that her [[reluctance|אי-רצון|רילוקטנס|new]] came from [[fear|פחד|פיר|learned]] of [[failure|כישלון|פיילור|new]], not from [[rational|הגיוני|רייショנל|new]] [[thinking|חשיבה|תינקינג|new]].",
-            "She [[determine|החליטה|דיטרמיינד|learned]] to [[persevere|להתמיד|פרסיווור|learned]] through the [[uncertainty|אי-ודאות|אנסרטיינטי|new]]. Her [[resilience|חוסני|רזיליאנס|new]] [[prove|הוכיחה|פרוווו|learned]] that [[true|אמיתי|טרו|new]] [[achievement|הישג|אצ'יוומנט|new]] [[require|דורשת|ריקוואייר|new]] both [[courage|אומץ|קורדז'|new]] and [[meticulous|זהיר מאוד|מטיקיולוס|new]] [[planning|תכנון|פלאנינג|new]]."
-        ],
-        audio: "Shoham faced a profound dilemma. She had two opportunities - one providing security, the other requiring perseverance and ambition. Her mentor told her: The inevitable consequence of a safe choice is mediocre accomplishment. Shoham contemplated for days. She felt vulnerable about taking the risk, but she acknowledged that her reluctance came from fear of failure, not from rational thinking. She determined to persevere through the uncertainty. Her resilience proved that true achievement requires both courage and meticulous planning."
-    },
-    {
-        title: "Compassion Versus Consequence 💔",
-        content: [
-            "Shoham [[discover|גילתה|דיסקאווורד|new]] an abandoned puppy that was [[vulnerable|חלוש|וולנרררבל|new]] and starving. She [[perceive|הבחינה|פרסיווו|learned]] the [[profound|עמוק|פרופאונד|new]] suffering in its [[eyes|עיניים|אייס|new]]. But bringing it home [[require|דרשה|ריקוואייר|new]] her to [[compromise|לפשר|קומפרומייז|learned]] with her [[parent|הורים|פרנט|new]], who were [[reluctant|לא רוצים|רילוקטנט|new]] to accept a pet.",
-            "She [[determine|החליטה|דיטרמיינד|learned]] to [[advocate|לתמוך בעד|אדוקיט|new]] for the puppy despite her [[initial|ראשוני|ינישאל|new]] [[reluctance|אי-רצון|רילוקטנס|new]] about [[conflict|קונפליקט|קונפליקט|new]]. She didn't [[persevere|התמדה|פרסיווור|learned]] through [[fear|פחד|פיר|learned]]; instead, she [[acknowledge|הודתה|אקנאלדג'|learned]] that [[compassion|חמלה|קומפאשן|new]] [[require|דורשת|ריקוואייר|new]] taking [[risk|סיכון|ריסק|new]].",
-            "The outcome was [[inevitable|בלתי נמנע|ינוויטאבל|new]]: her [[parent|הורים|פרנט|new]] [[perceive|ראו|פרסיווו|learned]] her [[meticulous|זהיר מאוד|מטיקיולוס|new]] care and [[determination|נחישות|דיטרמינישן|new]]. The family [[flourish|שגשגה|פלוריש|learned]] with the puppy, and Shoham's [[perseverance|התמדה|פרסיוורנס|new]] to do what was [[right|נכון|ריית|new]] [[accomplish|השלימה|אקומפליש|learned]] something [[remarkable|ראוי להערה|רימארקאבל|new]]: [[change|שינוי|צ'יינג'|new]] of [[heart|לב|הארט|learned]]."
-        ],
-        audio: "Shoham discovered an abandoned puppy that was vulnerable and starving. She perceived the profound suffering in its eyes. But bringing it home required her to compromise with her parents, who were reluctant to accept a pet. She determined to advocate for the puppy despite her initial reluctance about conflict. She didn't persevere through fear; instead, she acknowledged that compassion requires taking risk. The outcome was inevitable: her parents perceived her meticulous care and determination. The family flourished with the puppy, and Shoham's perseverance to do what was right accomplished something remarkable: change of heart."
-    },
-    {
-        title: "The Big Test 📝",
-        content: [
-            "Tomorrow is a [[big|גדול|ביג|learned]] [[day|יום|דיי|learned]]. There is a math [[test|מבחן|טסט|learned]] at [[school|בית ספר|סקול|learned]].",
-            "Shoham sits on her [[chair|כיסא|צ'ייר|learned]] and takes her [[pencil|עיפרון|פנסיל|learned]] and [[notebook|מחברת|נוטבוק|compound]]. She starts to [[read|לקרוא|ריד|learned]] and [[write|לכתוב|רייט|learned]].",
-            "It is [[late|מאוחר|לייט|new]] at [[night|לילה|נייט|learned]], but she wants to get a [[good|טוב|גוד|learned]] grade. Finally, she goes to [[sleep|לישון|סליפ|learned]]. She is ready!"
-        ],
-        audio: "Tomorrow is a big day. There is a math test at school. Shoham sits on her chair and takes her pencil and notebook. She starts to read and write. It is late at night, but she wants to get a good grade. Finally, she goes to sleep. She is ready!"
-    },
-
-    {
-        title: "Finding Her Voice 💪",
-        content: [
-            "Shoham had always been [[quiet|שקט|קווייט|learned]]. When her [[teacher|מורה|טיצ'ר|new]] asked questions in class, she felt [[nervous|עצבני|נרווס|new]] and [[worried|דאוג|וררייד|new]]. All the other students could [[speak|לדבר|ספיק|learned]] [[confidently|בביטחון|קונפידנטלי|new]], but not her.",
-            "One [[day|יום|דיי|learned]], she had an [[idea|רעיון|אידיאה|new]] about the [[project|פרויקט|פרוג'קט|new]]. She wanted to [[share|לשתף|שר|new]] it, but her [[heart|לב|הארט|learned]] was [[beating|פוקד|ביטינג|new]] so [[fast|מהיר|פאסט|learned]]. She [[took|לקח|טוק|learned]] a [[deep|עמוק|דיפ|new]] [[breath|נשימה|ברת|new]] and [[raised|הרים|ריזד|new]] her [[hand|יד|האנד|learned]].",
-            "The other students [[listened|הקשיבו|ליסנד|learned]] carefully. Her [[teacher|מורה|טיצ'ר|new]] [[smiled|חיך|סמיילד|learned]] and said, 'Wonderful idea, Shoham!' That [[day|יום|דיי|learned]], she [[discovered|גילתה|דיסקאוו'רד|new]] something [[important|חשוב|ימפורטנט|new]] about herself."
-        ],
-        audio: "Shoham had always been quiet. When her teacher asked questions in class, she felt nervous and worried. All the other students could speak confidently, but not her. One day, she had an idea about the project. She wanted to share it, but her heart was beating so fast. She took a deep breath and raised her hand. The other students listened carefully. Her teacher smiled and said, Wonderful idea, Shoham! That day, she discovered something important about herself."
-    },
-
-    {
-        title: "The Competition 🏆",
-        content: [
-            "Shoham [[trained|אומנה|טרייnd|new]] hard for the [[math|מתמטיקה|מאת|new]] [[competition|תחרות|קומפטישן|new]]. She [[practiced|התרגלה|פראקטיסד|new]] every [[night|לילה|נייט|learned]]. When the [[day|יום|דיי|learned]] came, she was [[ready|מוכנה|רדי|learned]].",
-            "But when she [[saw|ראתה|סו|learned]] the [[difficult|קשה|דיפיקלט|new]] [[problems|בעיות|פרובלמס|new]], her [[mind|מוח|מיינד|new]] felt [[blank|ריק|בלאנק|new]]. She didn't win the [[competition|תחרות|קומפטישן|new]]. She felt [[disappointed|מאוכזבת|דיסאפוינטד|new]].",
-            "Later, her [[mother|אמא|מאדר|learned]] told her something [[important|חשוב|ימפורטנט|new]]: 'You tried your [[best|הטוב|בסט|new]]. That's what really [[matters|חשוב|מטרס|new]].' Shoham [[realized|הבינה|ריאליזד|new]] that [[failing|כישלון|פיילינג|new]] once doesn't mean you should [[give up|להתייאש|גיב אפ|new]]."
-        ],
-        audio: "Shoham trained hard for the math competition. She practiced every night. When the day came, she was ready. But when she saw the difficult problems, her mind felt blank. She didn't win the competition. She felt disappointed. Later, her mother told her something important: You tried your best. That's what really matters. Shoham realized that failing once doesn't mean you should give up."
-    },
-
-    {
-        title: "Different Paths 🌈",
-        content: [
-            "Shoham and her [[best|הטוב|בסט|new]] [[friend|חברה|פרנד|learned]] Noa did everything together. They played the [[same|אותו|סיים|new]] [[games|משחקים|גיימס|learned]] and had the [[same|אותו|סיים|new]] [[interests|תחומי עניין|אינטרסטס|new]].",
-            "One [[day|יום|דיי|learned]], Noa told Shoham that she wanted to join the [[art|אמנות|ארט|new]] [[club|מועדון|קלוב|new]], while Shoham preferred the [[science|מדע|סיינס|new]] [[club|מועדון|קלוב|new]]. For the [[first|ראשון|פרסט|new]] [[time|זמן|טיים|learned]], they had [[different|שונה|דיפרנט|new]] [[paths|נתיבות|פאתס|new]].",
-            "Shoham felt [[sad|עצוב|סאד|learned]], but she [[learned|למדה|לרנד|learned]] something [[valuable|יקר|וואליואבל|new]]: You can still be [[best|הטוב|בסט|new]] [[friends|חברים|פרנדס|learned]] even when you have [[different|שונה|דיפרנט|new]] [[interests|תחומי עניין|אינטרסטס|new]]. [[Friendship|חברות|פרנדשיפ|new]] is [[strong|חזק|סטרונג|new]] enough to [[survive|להתמודד|סערווייוו|new]] different [[choices|בחירות|צ'ויסיס|new]]."
-        ],
-        audio: "Shoham and her best friend Noa did everything together. They played the same games and had the same interests. One day, Noa told Shoham that she wanted to join the art club, while Shoham preferred the science club. For the first time, they had different paths. Shoham felt sad, but she learned something valuable: You can still be best friends even when you have different interests. Friendship is strong enough to survive different choices."
+        audio: "Yesterday, Shoham and her family went to the park. The weather was very beautiful. They planned to have a picnic. Her dad bought a big pizza, and they ate it under a tree. After that, Shoham rode her bike and her brother watched a game. Suddenly, Shoham saw a small dog. She found the owner. They didn't leave until it was dark. Shoham thought it was a great day!",
+        questions: [
+            { q: "Where did Shoham go yesterday?", options: ["To the school", "To the park", "To the store"], correct: 1 },
+            { q: "What did her dad buy?", options: ["A dog", "A bike", "A pizza"], correct: 2 },
+            { q: "Why didn't they leave early?", options: ["Because they had fun", "Because it was raining", "Because they were lost"], correct: 0 }
+        ]
     }
 ];
 
-// --- Reading & Vowel Patterns for Easy, Scaffolded Learning ---
-const readingPatternsData = [
-  {
-    pattern: "Short A",
-    sound: "like in 'cat'",
-    hebrew: "צליל קצר כמו בקול הגרון",
-    words: [
-      { word: "cat", breakdown: "C-A-T", hebrew: "חתול" },
-      { word: "hat", breakdown: "H-A-T", hebrew: "כובע" },
-      { word: "map", breakdown: "M-A-P", hebrew: "מפה" },
-      { word: "and", breakdown: "A-N-D", hebrew: "וגם" }
-    ]
-  },
-  {
-    pattern: "Short E",
-    sound: "like in 'pen'",
-    hebrew: "צליל קצר כמו בטיפול",
-    words: [
-      { word: "pen", breakdown: "P-E-N", hebrew: "עט" },
-      { word: "bed", breakdown: "B-E-D", hebrew: "מיטה" },
-      { word: "leg", breakdown: "L-E-G", hebrew: "רגל" },
-      { word: "net", breakdown: "N-E-T", hebrew: "רשת" }
-    ]
-  },
-  {
-    pattern: "Short I",
-    sound: "like in 'sit'",
-    hebrew: "צליל קצר וגבוה",
-    words: [
-      { word: "sit", breakdown: "S-I-T", hebrew: "ישב" },
-      { word: "big", breakdown: "B-I-G", hebrew: "גדול" },
-      { word: "zip", breakdown: "Z-I-P", hebrew: "רוכסן" },
-      { word: "win", breakdown: "W-I-N", hebrew: "ניצחון" }
-    ]
-  },
-  {
-    pattern: "Short O",
-    sound: "like in 'dog'",
-    hebrew: "צליל עגול וקצר",
-    words: [
-      { word: "dog", breakdown: "D-O-G", hebrew: "כלב" },
-      { word: "box", breakdown: "B-O-X", hebrew: "קופסה" },
-      { word: "hot", breakdown: "H-O-T", hebrew: "חם" },
-      { word: "pot", breakdown: "P-O-T", hebrew: "סיר" }
-    ]
-  },
-  {
-    pattern: "Short U",
-    sound: "like in 'cup'",
-    hebrew: "צליל עמוק וקצר",
-    words: [
-      { word: "cup", breakdown: "C-U-P", hebrew: "כוס" },
-      { word: "run", breakdown: "R-U-N", hebrew: "רוץ" },
-      { word: "sun", breakdown: "S-U-N", hebrew: "שמש" },
-      { word: "bug", breakdown: "B-U-G", hebrew: "חרק" }
-    ]
-  },
-  {
-    pattern: "Long A (with silent E)",
-    sound: "like in 'cake' - A_E",
-    hebrew: "צליל ארוך כשה-E שקט בסוף",
-    words: [
-      { word: "cake", breakdown: "C-A-K-E", hebrew: "עוגה", note: "E שקט בסוף" },
-      { word: "name", breakdown: "N-A-M-E", hebrew: "שם", note: "E שקט בסוף" },
-      { word: "make", breakdown: "M-A-K-E", hebrew: "עשה", note: "E שקט בסוף" },
-      { word: "late", breakdown: "L-A-T-E", hebrew: "מאוחר", note: "E שקט בסוף" }
-    ]
-  },
-  {
-    pattern: "Long E (EA combination)",
-    sound: "like in 'read' - EA",
-    hebrew: "צליל ארוך עם שתי אותיות",
-    words: [
-      { word: "read", breakdown: "R-EA-D", hebrew: "קרא", note: "EA יחד" },
-      { word: "team", breakdown: "T-EA-M", hebrew: "צוות", note: "EA יחד" },
-      { word: "eat", breakdown: "EA-T", hebrew: "אכול", note: "EA יחד" },
-      { word: "seat", breakdown: "S-EA-T", hebrew: "כיסא", note: "EA יחד" }
-    ]
-  },
-  {
-    pattern: "Long O (OA combination)",
-    sound: "like in 'boat' - OA",
-    hebrew: "צליל ארוך עם שתי אותיות",
-    words: [
-      { word: "boat", breakdown: "B-OA-T", hebrew: "סירה", note: "OA יחד" },
-      { word: "coat", breakdown: "C-OA-T", hebrew: "מעיל", note: "OA יחד" },
-      { word: "road", breakdown: "R-OA-D", hebrew: "דרך", note: "OA יחד" },
-      { word: "goat", breakdown: "G-OA-T", hebrew: "עז", note: "OA יחד" }
-    ]
-  },
-  {
-    pattern: "OU combination",
-    sound: "like in 'house' - OU",
-    hebrew: "צליל שמע בגרון",
-    words: [
-      { word: "house", breakdown: "H-OU-S-E", hebrew: "בית", note: "OU יחד" },
-      { word: "mouse", breakdown: "M-OU-S-E", hebrew: "עכבר", note: "OU יחד" },
-      { word: "loud", breakdown: "L-OU-D", hebrew: "חזק", note: "OU יחד" },
-      { word: "cloud", breakdown: "CL-OU-D", hebrew: "ענן", note: "OU יחד" }
-    ]
-  },
-  {
-    pattern: "Vowel combinations (AI, EI, IE)",
-    sound: "like in 'rain', 'vein', 'pie'",
-    hebrew: "שתי אותיות שיוצרות צליל אחד",
-    words: [
-      { word: "rain", breakdown: "R-AI-N", hebrew: "גשם", note: "AI = EI" },
-      { word: "day", breakdown: "D-AY", hebrew: "יום", note: "AY = AI" },
-      { word: "pie", breakdown: "P-IE", hebrew: "עוגה", note: "IE צליל ארוך I" },
-      { word: "fly", breakdown: "FL-Y", hebrew: "זבוב", note: "Y כמו vowel בסוף" }
-    ]
-  }
-];
-
-const App = () => {
-    // Load Lottie web component dynamically
-    useEffect(() => {
-        if (!customElements.get('dotlottie-wc')) {
-            const script = document.createElement('script');
-            script.src = "https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.3/dist/dotlottie-wc.js";
-            script.type = "module";
-            document.head.appendChild(script);
-        }
-    }, []);
-
-    // --- Helper functions ---
-    const getRandomUnmasteredIndex = (masteredList) => {
-        const unmastered = wordsData.map((_, i) => i).filter(i => !masteredList.includes(i));
-        if (unmastered.length > 0) {
-            return unmastered[Math.floor(Math.random() * unmastered.length)];
-        }
-        return 0;
-    };
-
-    const getNextRandom = (curr, length) => {
-        if (length <= 1) return 0;
-        let next = curr;
-        while (next === curr) next = Math.floor(Math.random() * length);
-        return next;
-    };
-
-    // --- State Management ---
+export default function App() {
+    // --- State ---
     const [view, setView] = useState('learn'); 
-    
     const [masteredIndexes, setMasteredIndexes] = useState(() => {
-        try {
-            const saved = localStorage.getItem('shoham_mastered_words');
-            return saved ? JSON.parse(saved).filter(i => i < wordsData.length) : [];
-        } catch { return []; }
+        const saved = localStorage.getItem('shoham_test_mastered');
+        return saved ? JSON.parse(saved) : [];
     });
-    
-    const [activeWordIndex, setActiveWordIndex] = useState(() => {
-        const saved = localStorage.getItem('shoham_last_active_index');
-        if (saved !== null) {
-            const parsed = parseInt(saved);
-            if (parsed >= 0 && parsed < wordsData.length) return parsed;
-        }
-        const initialMastered = []; 
-        try {
-            const s = localStorage.getItem('shoham_mastered_words');
-            if(s) initialMastered.push(...JSON.parse(s).filter(i => i < wordsData.length));
-        } catch(e) {}
-        
-        return getRandomUnmasteredIndex(initialMastered);
-    });
-    
+    const [activeWordIndex, setActiveWordIndex] = useState(0);
     const [step, setStep] = useState(1);
-    const [isListening, setIsListening] = useState(false);
     const [feedback, setFeedback] = useState(null);
     const [options, setOptions] = useState([]);
     const [activeAnim, setActiveAnim] = useState(null);
+    const [isListening, setIsListening] = useState(false);
 
-    // Quiz & Practice States
+    // Specific game states
+    const [grammarIndex, setGrammarIndex] = useState(0);
+    const [grammarSolved, setGrammarSolved] = useState(false);
+    const [compIndex, setCompIndex] = useState(0);
+    const [analogyIndex, setAnalogyIndex] = useState(0);
+    const [storyMode, setStoryMode] = useState('read');
+    const [storyQuestionIndex, setStoryQuestionIndex] = useState(0);
+    
+    // Quiz state
     const [quizSet, setQuizSet] = useState([]);
     const [quizIndex, setQuizIndex] = useState(0);
     const [quizScore, setQuizScore] = useState(0);
-    
-    const [builderIndex, setBuilderIndex] = useState(0);
-    const [analogyIndex, setAnalogyIndex] = useState(0);
-    const [compIndex, setCompIndex] = useState(0);
-    const [storyIndex, setStoryIndex] = useState(0);
-    const [readingPatternIndex, setReadingPatternIndex] = useState(0);
-    const [wordInPatternIndex, setWordInPatternIndex] = useState(0);
 
-    // Match Game State
-    const [matchCards, setMatchCards] = useState([]);
-    const [flippedCards, setFlippedCards] = useState([]);
-    const [matchedPairs, setMatchedPairs] = useState([]);
-
-    // Story Audio Mute State
-    const [storyAudioMuted, setStoryAudioMuted] = useState(() => {
-        try {
-            const saved = localStorage.getItem('shoham_story_audio_muted');
-            return saved ? JSON.parse(saved) : false;
-        } catch { return false; }
-    });
-
-    // Verb Tenses Game State
-    const [verbIndex, setVerbIndex] = useState(0);
-    const [exerciseIndex, setExerciseIndex] = useState(0);
-    const [verbScore, setVerbScore] = useState(0);
-    const [verbFeedback, setVerbFeedback] = useState(null);
-
-    const isProcessingRef = useRef(false);
     const currentWord = wordsData[activeWordIndex] || wordsData[0];
 
     useEffect(() => {
-        localStorage.setItem('shoham_mastered_words', JSON.stringify(masteredIndexes));
-        localStorage.setItem('shoham_last_active_index', activeWordIndex.toString());
-    }, [masteredIndexes, activeWordIndex]);
+        localStorage.setItem('shoham_test_mastered', JSON.stringify(masteredIndexes));
+    }, [masteredIndexes]);
 
-    useEffect(() => {
-        localStorage.setItem('shoham_story_audio_muted', JSON.stringify(storyAudioMuted));
-    }, [storyAudioMuted]);
-
+    // --- Helpers ---
     const playSound = (type) => {
-        try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            if (type === 'success') {
-                oscillator.type = 'sine';
-                oscillator.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
-                oscillator.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1); 
-                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            } else {
-                oscillator.type = 'square';
-                oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
-                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-            }
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 0.3);
-        } catch(e) {}
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        if (type === 'success') {
+            osc.frequency.setValueAtTime(523, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
+        } else {
+            osc.frequency.setValueAtTime(150, ctx.currentTime);
+        }
+        osc.start();
+        osc.stop(ctx.currentTime + 0.2);
     };
 
-    const triggerAnimation = (type) => {
+    const triggerAnim = (type) => {
         setActiveAnim(type);
-        setTimeout(() => setActiveAnim(null), 1800);
+        setTimeout(() => setActiveAnim(null), 1500);
     };
 
+    const speak = (text) => {
+        window.speechSynthesis.cancel();
+        const utt = new SpeechSynthesisUtterance(text);
+        utt.lang = 'en-US';
+        utt.rate = 0.8;
+        window.speechSynthesis.speak(utt);
+    };
+
+    // --- Games Logic ---
     const startQuiz = () => {
-        const vocabQuestions = [...wordsData].sort(() => 0.5 - Math.random()).slice(0, 4).map(w => {
+        const set = [...wordsData].sort(() => 0.5 - Math.random()).slice(0, 10).map(w => {
             const others = wordsData.filter(x => x.he !== w.he).sort(() => 0.5 - Math.random()).slice(0, 3);
             const opts = [...others.map(x => x.he), w.he].sort(() => 0.5 - Math.random());
-            return { type: 'vocab', question: w.en, correct: w.he, options: opts };
+            return { q: w.en, correct: w.he, options: opts };
         });
-        const analogyQuestions = [...analogiesData].sort(() => 0.5 - Math.random()).slice(0, 3).map(a => {
-            return { type: 'analogy', data: a, correct: a.correct, options: a.options };
-        });
-        const completionQuestions = [...completionData].sort(() => 0.5 - Math.random()).slice(0, 3).map(c => {
-            return { type: 'completion', data: c, correct: c.correct, options: c.options };
-        });
-
-        const fullQuiz = [...vocabQuestions, ...analogyQuestions, ...completionQuestions].sort(() => 0.5 - Math.random());
-        setQuizSet(fullQuiz);
+        setQuizSet(set);
         setQuizIndex(0);
         setQuizScore(0);
         setView('quiz');
-        setFeedback(null);
     };
 
-    const startMatchGame = () => {
-        const selectedWords = [...wordsData].sort(() => 0.5 - Math.random()).slice(0, 6);
-        let cards = [];
-        selectedWords.forEach((w, index) => {
-            cards.push({ id: `en-${index}`, text: w.en, type: 'en', pairId: index });
-            cards.push({ id: `he-${index}`, text: w.he, type: 'he', pairId: index });
-        });
-        setMatchCards(cards.sort(() => 0.5 - Math.random()));
-        setFlippedCards([]);
-        setMatchedPairs([]);
-        setView('match');
-    };
-
-    const handleCardClick = (card) => {
-        if (flippedCards.length === 2 || flippedCards.some(c => c.id === card.id) || matchedPairs.includes(card.pairId)) return;
-        
-        const newFlipped = [...flippedCards, card];
-        setFlippedCards(newFlipped);
-
-        if (newFlipped.length === 2) {
-            if (newFlipped[0].pairId === newFlipped[1].pairId) {
-                playSound('success');
-                setTimeout(() => {
-                    setMatchedPairs(prev => [...prev, newFlipped[0].pairId]);
-                    setFlippedCards([]);
-                    if (matchedPairs.length + 1 === 6) { triggerAnimation('confetti'); }
-                }, 500);
-            } else {
-                playSound('error');
-                setTimeout(() => setFlippedCards([]), 1000);
-            }
-        }
-    };
-
-    useEffect(() => {
-        if (view === 'learn' && step === 2) {
-            const others = wordsData.filter(w => w.en !== currentWord.en).sort(() => 0.5 - Math.random()).slice(0, 3);
-            setOptions([...others, currentWord].sort(() => 0.5 - Math.random()));
-        }
-    }, [step, activeWordIndex, view, currentWord]);
-
-    const speakText = (text) => {
-        // Check if story audio is muted (only applies to story audio, not other uses)
-        if (storyAudioMuted && view === 'story') return;
-
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.85; // קצב קצת יותר איטי ורגוע
-        utterance.pitch = 1.15; // פיץ' קצת יותר גבוה ורך
-        
-        const voices = window.speechSynthesis.getVoices();
-        
-        // רשימת קולות מועדפים, טבעיים ונשיים יותר
-        const priorityVoices = [
-            "Microsoft Jenny Online", // קול טבעי מאוד של ווינדוס
-            "Microsoft Aria Online", // קול טבעי של ווינדוס
-            "Google US English", // גוגל כרום
-            "Samantha", // מאק/אייפון
-            "Karen", // מאק/אייפון
-            "Victoria", // מאק/אייפון
-            "Microsoft Zira" // ווינדוס קלאסי
-        ];
-        
-        // 1. קודם נחפש קולות שמוגדרים כטבעיים או משופרים
-        let selectedVoice = voices.find(v => 
-            v.lang.startsWith('en') && 
-            (v.name.includes("Premium") || v.name.includes("Enhanced") || v.name.includes("Online") || v.name.includes("Natural")) &&
-            !v.name.toLowerCase().includes("male")
-        );
-
-        // 2. אם לא מצאנו, נחפש לפי הרשימה המועדפת שלנו
-        if (!selectedVoice) {
-            selectedVoice = voices.find(v => priorityVoices.some(p => v.name.includes(p)));
-        }
-
-        // 3. גיבוי - כל קול נשי באנגלית
-        if (!selectedVoice) {
-            selectedVoice = voices.find(v => v.lang.startsWith('en') && (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('woman')));
-        }
-        
-        if (selectedVoice) utterance.voice = selectedVoice;
-        window.speechSynthesis.speak(utterance);
-    };
-
-    const handleSpeechCapture = () => {
-        if (isListening) return;
+    const handleSpeech = () => {
         const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!Recognition) return alert("הדפדפן לא תומך בזיהוי קולי.");
+        if (!Recognition) return;
         const rec = new Recognition();
         rec.lang = 'en-US';
-        rec.continuous = false;
-        rec.interimResults = false;
-        rec.maxAlternatives = 1;
-        isProcessingRef.current = false;
-
         rec.onstart = () => setIsListening(true);
-
-        rec.onend = () => {
-            setIsListening(false);
-            isProcessingRef.current = false;
-        };
-
-        rec.onerror = (e) => {
-            setIsListening(false);
-            isProcessingRef.current = false;
-            if (e.error === 'no-speech') {
-                setFeedback({ type: 'error', message: 'לא שמעתי כלום, נסי שוב 🎤' });
-            } else if (e.error === 'not-allowed') {
-                setFeedback({ type: 'error', message: 'נא לאשר גישה למיקרופון בדפדפן.' });
-            } else {
-                setFeedback({ type: 'error', message: 'שגיאת מיקרופון, נסי שוב.' });
-            }
-            setTimeout(() => setFeedback(null), 2500);
-        };
-
+        rec.onend = () => setIsListening(false);
         rec.onresult = (e) => {
-            if (isProcessingRef.current) return;
-            const transcript = e.results[0][0].transcript.toLowerCase().trim();
-            const target = currentWord.en.toLowerCase().replace(/^to\s+/, "").trim();
-
-            if (transcript.includes(target) || transcript === target) {
-                isProcessingRef.current = true;
-                setFeedback({ type: 'success', message: `מעולה! זיהיתי "${transcript}"` });
+            const transcript = e.results[0][0].transcript.toLowerCase();
+            const target = currentWord.en.toLowerCase().split('-')[1]?.trim() || currentWord.en.toLowerCase();
+            if (transcript.includes(target)) {
                 playSound('success');
-                triggerAnimation('success-check');
-
-                setMasteredIndexes(prevMastered => {
-                    const nextMastered = prevMastered.includes(activeWordIndex) ? prevMastered : [...prevMastered, activeWordIndex];
-
-                    setTimeout(() => {
-                        const unmastered = wordsData.map((_, i) => i).filter(i => !nextMastered.includes(i));
-
-                        if (unmastered.length > 0) {
-                            const randomNextIdx = unmastered[Math.floor(Math.random() * unmastered.length)];
-                            setActiveWordIndex(randomNextIdx);
-                        } else {
-                            setFeedback({ type: 'success', message: "אלופה! סיימת את כל המאגר!" });
-                        }
-
-                        setStep(1);
-                        setFeedback(null);
-                        isProcessingRef.current = false;
-                    }, 1800);
-
-                    return nextMastered;
-                });
+                setFeedback({ type: 'success', message: 'כל הכבוד! הגייה מצוינת' });
+                setMasteredIndexes(prev => prev.includes(activeWordIndex) ? prev : [...prev, activeWordIndex]);
+                triggerAnim('success-check');
+                setTimeout(() => {
+                    setStep(1);
+                    setActiveWordIndex(prev => (prev + 1) % wordsData.length);
+                    setFeedback(null);
+                }, 1500);
             } else {
-                setFeedback({ type: 'error', message: `שמעתי "${transcript}", נסי להגות ברור יותר.` });
                 playSound('error');
+                setFeedback({ type: 'error', message: `שמעתי "${transcript}", נסי שוב` });
             }
         };
-
-        try {
-            rec.start();
-        } catch (e) {
-            setIsListening(false);
-            setFeedback({ type: 'error', message: 'לא ניתן להפעיל מיקרופון, נסי שוב.' });
-            setTimeout(() => setFeedback(null), 2500);
-        }
+        rec.start();
     };
 
-    const checkTranslation = (he) => {
-        if (he === currentWord.he) {
-            playSound('success');
-            setStep(3);
-        } else {
-            playSound('error');
-            setFeedback({ type: 'error', message: "טעות, נסי שוב." });
-            setTimeout(() => setFeedback(null), 1500);
-        }
-    };
-
-    const handleQuizAnswer = (selected) => {
-        if (isProcessingRef.current) return;
-        isProcessingRef.current = true;
-        const target = quizSet[quizIndex];
-        
-        if (selected === target.correct) {
-            setQuizScore(prev => prev + 1);
-            playSound('success');
-            triggerAnimation('success-check');
-        } else {
-            playSound('error');
-        }
-        
-        setTimeout(() => {
-            if (quizIndex < 9) setQuizIndex(prev => prev + 1);
-            else setView('quiz-result');
-            isProcessingRef.current = false;
-        }, 1200);
-    };
-
-    const handleVerbAnswer = (selected) => {
-        if (isProcessingRef.current) return;
-        isProcessingRef.current = true;
-        const currentExercise = verbsData[verbIndex].exercises[exerciseIndex];
-
-        if (selected === currentExercise.correct) {
-            setVerbScore(prev => prev + 1);
-            playSound('success');
-            triggerAnimation('success-check');
-            setVerbFeedback({ type: 'success', message: `מצוין! ✅` });
-        } else {
-            playSound('error');
-            setVerbFeedback({ type: 'error', message: `טעות. התשובה הנכונה: ${currentExercise.correct}` });
-        }
-
-        setTimeout(() => {
-            if (exerciseIndex < 4) {
-                setExerciseIndex(prev => prev + 1);
-            } else if (verbIndex < verbsData.length - 1) {
-                setVerbIndex(prev => prev + 1);
-                setExerciseIndex(0);
-            } else {
-                setView('verb-result');
-            }
-            setVerbFeedback(null);
-            isProcessingRef.current = false;
-        }, 1500);
-    };
-
-    const resetProgress = () => {
-        if (confirm("האם לאפס התקדמות? הפעולה הזו תחזיר את כל המילים להיות 'לא נלמדו'.")) {
-            setMasteredIndexes([]);
-            localStorage.removeItem('shoham_mastered_words');
-            localStorage.removeItem('shoham_last_active_index');
-            
-            const randomFirstIndex = Math.floor(Math.random() * wordsData.length);
-            setActiveWordIndex(randomFirstIndex);
-            
-            setView('learn');
-            setStep(1);
-        }
-    };
-
-    // --- Story Content Parser ---
     const renderStoryText = (text) => {
-        const parts = text.split(/(\[\[.*?\]\])/g);
-        
-        const typeStyles = {
-            learned: "text-fuchsia-600 border-fuchsia-300",
-            compound: "text-rose-600 border-rose-300",
-            new: "text-pink-600 border-pink-300"
-        };
-
-        return parts.map((part, i) => {
+        return text.split(/(\[\[.*?\]\])/g).map((part, i) => {
             if (part.startsWith('[[') && part.endsWith(']]')) {
-                const [word, he, pron, type] = part.slice(2, -2).split('|');
-                const styleClass = typeStyles[type] || typeStyles.learned;
-                
+                const [word, he] = part.slice(2, -2).split('|');
                 return (
-                    <span key={i} className={`relative group font-bold cursor-help inline-block border-b-2 transition-colors hover:bg-slate-50 rounded-sm px-1 ${styleClass}`}>
+                    <span key={i} className="font-bold text-pink-600 border-b-2 border-pink-200 cursor-help group relative px-1">
                         {word}
-                        {/* Tooltip Bubble */}
-                        <span className="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 w-max px-3 py-1.5 bg-slate-800 text-white rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50 shadow-xl flex flex-col items-center" dir="rtl">
-                            <span className="font-black text-sm">{he}</span>
-                            <span className="text-pink-300 text-xs mt-0.5" dir="rtl">{pron}</span>
-                            <span className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800"></span>
-                        </span>
+                        <span className="absolute bottom-full left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs p-2 rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-10">{he}</span>
                     </span>
                 );
             }
@@ -828,411 +196,226 @@ const App = () => {
         });
     };
 
-    // --- UI Components ---
-    const NavBtn = ({ icon, text, targetView, action }) => (
-        <button
-            onClick={() => { if(action) action(); else setView(targetView); }}
-            className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm border border-transparent ${view === targetView || (view.startsWith('quiz') && targetView==='quiz') ? 'bg-pink-500 text-white shadow-md scale-105 border-pink-600' : 'bg-white text-slate-700 hover:bg-pink-50 hover:text-pink-600 hover:border-pink-200'}`}
+    // --- UI Blocks ---
+    const NavBtn = ({ icon, label, target, action }) => (
+        <button 
+            onClick={() => { if(action) action(); else { setView(target); setFeedback(null); }}}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all ${view === target ? 'bg-pink-500 text-white shadow-lg scale-105' : 'bg-white text-slate-700 hover:bg-pink-50'}`}
         >
-            <span className="text-sm sm:text-base">{icon}</span> <span className="hidden sm:inline">{text}</span>
+            <span>{icon}</span> {label}
         </button>
     );
 
     return (
-        <div className="min-h-screen bg-rose-50 text-slate-800 p-4 md:p-8 font-sans" dir="rtl">
-            <div className="max-w-5xl mx-auto">
-                <header className="text-center mb-8">
-                    <div className="flex justify-between items-center mb-6">
-                        <button onClick={resetProgress} className="text-xs bg-white hover:bg-pink-100 text-pink-600 px-3 py-1 rounded-full font-bold shadow-sm">איפוס 🔄</button>
-                        <h1 className="text-4xl md:text-5xl font-black text-pink-600 drop-shadow-sm">העולם של שוהם 🎡</h1>
-                        <div className="w-16"></div>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-3">
-                        <NavBtn icon="🎓" text="למידה" targetView="learn" />
-                        <NavBtn icon="📖" text="ספריה" targetView="library" />
-                        <NavBtn icon="🧩" text="הרכבה" targetView="builder" action={() => {setView('builder'); setBuilderIndex(Math.floor(Math.random() * builderData.length));}} />
-                        <NavBtn icon="🔗" text="אנלוגיות" targetView="analogies" action={() => {setView('analogies'); setAnalogyIndex(Math.floor(Math.random() * analogiesData.length));}} />
-                        <NavBtn icon="✍️" text="משפטים" targetView="completion" action={() => {setView('completion'); setCompIndex(Math.floor(Math.random() * completionData.length));}} />
-                        <NavBtn icon="📚" text="סיפור" targetView="story" action={() => {setView('story'); setStoryIndex(Math.floor(Math.random() * storiesData.length));}}/>
-                        <NavBtn icon="📖" text="קריאה" targetView="reading" action={() => {setView('reading'); setReadingPatternIndex(Math.floor(Math.random() * readingPatternsData.length)); setWordInPatternIndex(0);}} />
-                        <NavBtn icon="🃏" text="זוגות" targetView="match" action={startMatchGame} />
-                        <NavBtn icon="🏆" text="בוחן" targetView="quiz" action={startQuiz} />
-                        <NavBtn icon="🕐" text="פעלים" targetView="verbs" action={() => { setView('verbs'); setVerbIndex(0); setExerciseIndex(0); setVerbScore(0); setVerbFeedback(null); }} />
-                    </div>
-                </header>
-
-                {/* Animations Overlay */}
+        <div className="min-h-screen bg-rose-50 p-4 md:p-8 font-sans text-slate-800" dir="rtl">
+            <div className="max-w-4xl mx-auto">
+                
+                {/* Fixed Animations */}
                 {activeAnim === 'success-check' && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none bg-white/30 backdrop-blur-sm">
-                        <dotlottie-wc src="https://lottie.host/21a44f7a-fb9f-4e6e-8ed5-647aa8455b43/jGVlPat0sl.lottie" style={{width: '300px', height: '300px'}} autoplay></dotlottie-wc>
+                    <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none bg-white/20 backdrop-blur-sm">
+                        <div className="text-[150px] animate-bounce">✅</div>
                     </div>
                 )}
                 {activeAnim === 'confetti' && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none bg-white/30 backdrop-blur-sm">
-                        <dotlottie-wc src="https://lottie.host/4c47d84e-6829-4be0-a686-d7a0817a318d/HgXH5VSCYu.lottie" style={{width:'100vw', height:'100vh'}} autoplay></dotlottie-wc>
+                    <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none bg-white/20 backdrop-blur-sm">
+                        <div className="text-[150px] animate-spin">🎉</div>
                     </div>
                 )}
 
-                {/* --- MAIN LEARN VIEW --- */}
-                {view === 'learn' && (
-                    <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border-t-8 border-pink-400 text-center relative min-h-[450px] flex flex-col justify-center transition-all">
-                        {feedback && <div className={`absolute top-0 left-0 w-full p-3 rounded-t-[3rem] text-white font-bold transition-all ${feedback.type === 'success' ? 'bg-fuchsia-500' : 'bg-rose-500'}`}>{feedback.message}</div>}
-                        <h2 className="text-6xl font-black text-pink-900 mb-8" dir="ltr">{currentWord.en}</h2>
-                        
-                        {step === 1 && (
-                            <div className="space-y-6">
-                                <button onClick={() => speakText(currentWord.en)} className="w-24 h-24 bg-pink-500 text-white rounded-full flex items-center justify-center mx-auto shadow-lg hover:scale-110 active:scale-95 transition-all">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
-                                </button>
-                                <button onClick={() => setStep(2)} className="mt-8 px-10 py-5 bg-white border-4 border-pink-400 text-pink-600 font-black text-2xl rounded-2xl shadow-xl hover:bg-pink-500 hover:text-white transition-all transform hover:scale-105 block mx-auto w-full max-w-sm">
-                                    אני מכירה, נעבור לתרגום ✨
-                                </button>
-                            </div>
-                        )}
-                        {step === 2 && (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {options.map((opt, i) => (
-                                    <button key={i} onClick={() => checkTranslation(opt.he)} className="p-6 bg-pink-50 border-2 border-pink-200 rounded-2xl font-bold text-xl text-pink-900 hover:bg-pink-500 hover:text-white transition-all shadow-sm">
-                                        {opt.he}
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                        {step === 3 && (
-                            <div className="space-y-6">
-                                <p className="text-slate-500 font-bold">עכשיו תורך! אמרי את המילה באנגלית:</p>
-                                <button onClick={handleSpeechCapture} className={`w-32 h-32 rounded-full flex items-center justify-center mx-auto shadow-2xl transition-all relative ${isListening ? 'bg-rose-400 scale-110' : 'bg-pink-500 hover:bg-pink-600'}`}>
-                                    {isListening && <span className="absolute inset-0 rounded-full border-4 border-rose-300 animate-ping"></span>}
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-14 w-14" fill="none" viewBox="0 0 24 24" stroke="white"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
-                                </button>
-                                <p className="font-bold text-slate-400">{isListening ? "אני מקשיב..." : "לחצי על המיקרופון"}</p>
-                            </div>
-                        )}
-                        <div className="w-full bg-pink-100 h-4 rounded-full mt-10 overflow-hidden">
-                            <div className="bg-fuchsia-400 h-full transition-all duration-700" style={{width: `${(masteredIndexes.length / wordsData.length) * 100}%`}}></div>
-                        </div>
-                        <p className="text-pink-400 text-sm mt-2 font-bold">{masteredIndexes.length} מתוך {wordsData.length} מילים נלמדו</p>
+                <header className="text-center mb-10">
+                    <h1 className="text-5xl font-black text-pink-600 mb-6 drop-shadow-sm">העולם של שוהם 🎡</h1>
+                    <div className="flex flex-wrap justify-center gap-3">
+                        <NavBtn icon="🎓" label="למידה" target="learn" />
+                        <NavBtn icon="📖" label="ספריה" target="library" />
+                        <NavBtn icon="⏳" label="דקדוק" target="grammar" action={() => { setView('grammar'); setGrammarSolved(false); }} />
+                        <NavBtn icon="🧩" label="מחסן מילים" target="completion" />
+                        <NavBtn icon="🔗" label="אנלוגיות" target="analogies" />
+                        <NavBtn icon="📚" label="אנסין" target="story" action={() => { setView('story'); setStoryMode('read'); setStoryQuestionIndex(0); }} />
+                        <NavBtn icon="🏆" label="בוחן" target="quiz" action={startQuiz} />
                     </div>
-                )}
+                </header>
 
-                {/* --- LIBRARY --- */}
-                {view === 'library' && (
-                    <div className="bg-white rounded-[3rem] p-8 shadow-xl border-t-8 border-peach-400 border-orange-300 transition-all">
-                        <h2 className="text-3xl font-black text-rose-500 mb-6 text-center">הספריה של שוהם 📚</h2>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 max-h-[60vh] overflow-y-auto pr-2">
-                            {wordsData.map((w, idx) => {
-                                const isM = masteredIndexes.includes(idx);
-                                return (
-                                    <div key={idx} onClick={() => { setActiveWordIndex(idx); setStep(1); setView('learn'); }} className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${isM ? 'bg-fuchsia-50 border-fuchsia-300' : 'bg-rose-50 border-rose-100 hover:border-pink-400'}`}>
-                                        <p className="font-black text-lg text-center text-slate-800" dir="ltr">{w.en}</p>
-                                        <p className="text-sm text-center text-slate-600 mt-1">{w.he}</p>
-                                        {isM && <span className="text-fuchsia-500 text-center block mt-1 font-bold">✓</span>}
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </div>
-                )}
-
-                {/* --- MATCH GAME --- */}
-                {view === 'match' && (
-                    <div className="bg-white rounded-[3rem] p-8 shadow-xl border-t-8 border-purple-400 text-center transition-all min-h-[500px]">
-                        <h2 className="text-3xl font-black text-purple-700 mb-2">זוגות - מצא את ההתאמה 🃏</h2>
-                        <p className="text-slate-500 font-bold mb-8">לחצי על קלף אנגלית והפירוש שלו בעברית</p>
-                        
-                        {matchedPairs.length === 6 ? (
-                            <div className="py-20">
-                                <h3 className="text-5xl font-black text-fuchsia-500 mb-6">ניצחון! 🎉</h3>
-                                <button onClick={startMatchGame} className="px-8 py-4 bg-purple-500 text-white rounded-xl font-bold hover:bg-purple-600">שחקי שוב</button>
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
-                                {matchCards.map((card, i) => {
-                                    const isFlipped = flippedCards.some(c => c.id === card.id);
-                                    const isMatched = matchedPairs.includes(card.pairId);
-                                    return (
-                                        <button 
-                                            key={i} 
-                                            onClick={() => handleCardClick(card)}
-                                            disabled={isFlipped || isMatched}
-                                            className={`h-24 md:h-32 rounded-2xl font-black text-xl md:text-2xl transition-all shadow-md flex items-center justify-center border-4 ${isMatched ? 'bg-fuchsia-100 border-fuchsia-300 text-fuchsia-800 opacity-0 scale-95 cursor-default' : isFlipped ? 'bg-pink-100 border-pink-400 text-pink-900 scale-105' : 'bg-purple-50 border-purple-200 text-purple-900 hover:bg-purple-100'}`}
-                                            dir={card.type === 'en' ? 'ltr' : 'rtl'}
-                                        >
-                                            {card.text}
-                                        </button>
-                                    )
-                                })}
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                {/* --- BUILDER --- */}
-                {view === 'builder' && (
-                    <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border-t-8 border-rose-400 text-center transition-all">
-                        <h2 className="text-3xl font-black text-rose-600 mb-4">מילים מורכבות 🧩</h2>
-                        <p className="text-slate-600 mb-8 font-bold text-lg">{builderData[builderIndex].explanation}</p>
-                        <div className="flex justify-center items-center text-2xl md:text-5xl font-black gap-2 mb-8 bg-rose-50 p-6 rounded-3xl border-2 border-rose-100" dir="ltr">
-                            <span className="text-rose-500">{builderData[builderIndex].type === 'prefix' ? builderData[builderIndex].prefix : builderData[builderIndex].part1}</span>
-                            <span className="text-pink-300">+</span>
-                            <span className="text-slate-700">{builderData[builderIndex].type === 'prefix' ? builderData[builderIndex].root : builderData[builderIndex].part2}</span>
-                            <span className="text-pink-300 mx-2">=</span>
-                            <span className="text-rose-700 underline decoration-rose-300">{builderData[builderIndex].word}</span>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            {builderData[builderIndex].options.map((opt, i) => (
-                                <button key={i} onClick={() => {
-                                    if (i === builderData[builderIndex].correct) { 
-                                        playSound('success'); 
-                                        triggerAnimation('success-check'); 
-                                        setTimeout(() => setBuilderIndex(prev => getNextRandom(prev, builderData.length)), 1500); 
-                                    } else playSound('error');
-                                }} className="p-6 bg-rose-50 border-2 border-rose-200 rounded-2xl font-bold text-xl text-rose-900 hover:bg-rose-500 hover:text-white transition-all shadow-sm">{opt}</button>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* --- ANALOGIES --- */}
-                {view === 'analogies' && (
-                    <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border-t-8 border-fuchsia-400 text-center transition-all">
-                        <h2 className="text-3xl font-black text-fuchsia-800 mb-8">אנלוגיות - מה הקשר? 🔗</h2>
-                        <div className="bg-fuchsia-50 px-6 py-2 rounded-full inline-block mb-8 font-bold text-fuchsia-800 text-lg">{analogiesData[analogyIndex].relation}</div>
-                        
-                        <div className="flex justify-center items-center gap-4 text-3xl md:text-4xl font-black bg-pink-50 p-6 rounded-2xl mb-4 border-2 border-pink-100 w-full max-w-lg mx-auto" dir="ltr">
-                            <span className="text-slate-700">{analogiesData[analogyIndex].word1}</span><span className="text-fuchsia-400">↔️</span><span className="text-slate-700">{analogiesData[analogyIndex].word2}</span>
-                        </div>
-                        <div className="text-xl text-slate-400 font-bold mb-4">בדיוק כמו ש...</div>
-                        <div className="flex justify-center items-center gap-4 text-3xl md:text-4xl font-black bg-fuchsia-100 p-6 rounded-2xl mb-10 border-4 border-fuchsia-200 w-full max-w-lg mx-auto" dir="ltr">
-                            <span className="text-fuchsia-900">{analogiesData[analogyIndex].word3}</span><span className="text-fuchsia-400">↔️</span><span className="border-b-4 border-fuchsia-500 text-fuchsia-500 w-16 text-center">?</span>
-                        </div>
-                        
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {analogiesData[analogyIndex].options.map((opt, i) => (
-                                <button key={i} onClick={() => {
-                                    if (opt === analogiesData[analogyIndex].correct) { 
-                                        playSound('success'); 
-                                        triggerAnimation('success-check'); 
-                                        setTimeout(() => setAnalogyIndex(prev => getNextRandom(prev, analogiesData.length)), 1500); 
-                                    } else playSound('error');
-                                }} className="p-5 bg-white border-2 border-fuchsia-200 rounded-2xl font-black text-xl text-fuchsia-800 hover:bg-fuchsia-500 hover:text-white transition-all shadow-sm" dir="ltr">{opt}</button>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* --- COMPLETION --- */}
-                {view === 'completion' && (
-                    <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border-t-8 border-pink-500 text-center transition-all">
-                        <h2 className="text-3xl font-black text-pink-800 mb-8">השלמת משפטים ✍️</h2>
-                        <div className="bg-pink-50 p-8 rounded-2xl border-2 border-pink-200 mb-10 text-2xl font-bold text-slate-800 leading-loose shadow-inner" dir="ltr">
-                            {completionData[compIndex].sentence.split('_______')[0]}
-                            <span className="inline-block border-b-4 border-pink-500 text-pink-600 px-4">?</span>
-                            {completionData[compIndex].sentence.split('_______')[1]}
-                        </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                            {completionData[compIndex].options.map((opt, i) => (
-                                <button key={i} onClick={() => {
-                                    if (opt === completionData[compIndex].correct) { 
-                                        playSound('success'); 
-                                        triggerAnimation('success-check'); 
-                                        setTimeout(() => setCompIndex(prev => getNextRandom(prev, completionData.length)), 1500); 
-                                    } else playSound('error');
-                                }} className="p-6 bg-white border-2 border-pink-200 rounded-2xl font-black text-xl text-pink-800 hover:bg-pink-500 hover:text-white transition-all shadow-sm" dir="ltr">{opt}</button>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* --- QUIZ --- */}
-                {view === 'quiz' && (
-                    <div className="bg-white rounded-[3rem] p-8 shadow-xl border-t-8 border-fuchsia-500 text-center transition-all">
-                        <h2 className="text-xl font-bold text-fuchsia-700 mb-8">שאלה {quizIndex + 1} מתוך 10</h2>
-                        
-                        {quizSet[quizIndex].type === 'vocab' && (
-                            <div className="mb-10">
-                                <h3 className="text-6xl font-black text-slate-900" dir="ltr">{quizSet[quizIndex].question}</h3>
-                            </div>
-                        )}
-                        {quizSet[quizIndex].type === 'analogy' && (
-                            <div className="mb-10 flex flex-col items-center">
-                                <div className="text-3xl font-black bg-slate-50 p-4 rounded-xl mb-4 border-2 border-slate-200 w-full max-w-sm flex justify-center gap-4" dir="ltr">
-                                    <span>{quizSet[quizIndex].data.word1}</span> ↔️ <span>{quizSet[quizIndex].data.word2}</span>
+                {/* Main Views */}
+                <main className="bg-white rounded-[3rem] p-8 shadow-xl border-t-8 border-pink-400 min-h-[450px] flex flex-col justify-center transition-all">
+                    
+                    {/* 🎓 LEARN VIEW */}
+                    {view === 'learn' && (
+                        <div className="text-center">
+                            <h2 className="text-6xl font-black text-slate-900 mb-10" dir="ltr">{currentWord.en}</h2>
+                            {step === 1 ? (
+                                <div className="space-y-6">
+                                    <button onClick={() => speak(currentWord.en)} className="w-24 h-24 bg-pink-500 text-white rounded-full mx-auto flex items-center justify-center text-4xl shadow-lg hover:scale-110 active:scale-95 transition-all">🔊</button>
+                                    <button onClick={() => {
+                                        const others = wordsData.filter(x => x.he !== currentWord.he).sort(() => 0.5 - Math.random()).slice(0, 3);
+                                        setOptions([...others, currentWord].sort(() => 0.5 - Math.random()));
+                                        setStep(2);
+                                    }} className="px-10 py-4 bg-white border-4 border-pink-400 text-pink-600 font-black text-2xl rounded-2xl hover:bg-pink-500 hover:text-white transition-all">אני מכירה את המילה ✨</button>
                                 </div>
-                                <div className="text-3xl font-black text-fuchsia-700 bg-fuchsia-50 p-4 rounded-xl border-2 border-fuchsia-200 w-full max-w-sm flex justify-center gap-4" dir="ltr">
-                                    <span>{quizSet[quizIndex].data.word3}</span> ↔️ <span className="border-b-4 border-fuchsia-400 min-w-[50px]">?</span>
+                            ) : step === 2 ? (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {options.map((opt, i) => (
+                                        <button key={i} onClick={() => {
+                                            if (opt.he === currentWord.he) { playSound('success'); setStep(3); }
+                                            else { playSound('error'); setFeedback({type:'error', message: 'לא נכון, נסי שוב'}); }
+                                        }} className="p-6 bg-pink-50 border-2 border-pink-200 rounded-2xl font-bold text-xl hover:bg-pink-500 hover:text-white transition-all">{opt.he}</button>
+                                    ))}
                                 </div>
-                            </div>
-                        )}
-                        {quizSet[quizIndex].type === 'completion' && (
-                            <div className="mb-10 text-2xl font-bold bg-fuchsia-50 p-6 rounded-2xl border-2 border-fuchsia-200" dir="ltr">
-                                {quizSet[quizIndex].data.sentence.split('_______')[0]} <span className="border-b-4 border-fuchsia-500 px-4">?</span> {quizSet[quizIndex].data.sentence.split('_______')[1]}
-                            </div>
-                        )}
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {quizSet[quizIndex].options.map((opt, i) => (
-                                <button key={i} onClick={() => handleQuizAnswer(opt)} className="p-5 bg-pink-50 border-2 border-pink-100 rounded-2xl font-bold text-xl text-pink-900 hover:bg-pink-500 hover:text-white transition-all shadow-sm">
-                                    {opt}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {/* --- VERB TENSES VIEW --- */}
-                {view === 'verbs' && (
-                    <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border-t-8 border-blue-400 text-center transition-all">
-                        <h2 className="text-3xl font-black text-blue-800 mb-2">צמידות פעלים וזמנים 🕐</h2>
-                        <p className="text-slate-600 mb-6 font-bold">פועל {verbIndex + 1} מתוך {verbsData.length}: {verbsData[verbIndex].infinitive}</p>
-
-                        <div className="bg-blue-50 p-6 rounded-2xl border-2 border-blue-200 mb-8">
-                            <p className="text-2xl font-bold text-slate-800 mb-4">{verbsData[verbIndex].hebrew}</p>
-                            <p className="text-lg text-slate-700 mb-6">{verbsData[verbIndex].exercises[exerciseIndex].sentence}</p>
-                            <p className="text-sm text-blue-600 font-semibold mb-4">🕐 זמן: {verbsData[verbIndex].exercises[exerciseIndex].tense}</p>
-                        </div>
-
-                        {verbFeedback && (
-                            <div className={`p-4 rounded-2xl mb-6 font-bold text-lg ${verbFeedback.type === 'success' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}>
-                                {verbFeedback.message}
-                            </div>
-                        )}
-
-                        {!verbFeedback && (
-                            <div className="grid grid-cols-2 gap-3 md:gap-4 mb-8">
-                                {verbsData[verbIndex].exercises[exerciseIndex].options.map((opt, i) => (
-                                    <button key={i} onClick={() => handleVerbAnswer(opt)} className="p-4 bg-blue-50 border-2 border-blue-100 rounded-2xl font-bold text-lg text-blue-900 hover:bg-blue-500 hover:text-white transition-all shadow-sm hover:shadow-lg">
-                                        {opt}
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-
-                        {verbFeedback && verbFeedback.type === 'success' && (
-                            <p className="text-sm text-slate-600 font-semibold">💡 {verbsData[verbIndex].exercises[exerciseIndex].explanation}</p>
-                        )}
-
-                        <p className="text-slate-600 font-semibold">תרגיל {exerciseIndex + 1} מתוך 5</p>
-                    </div>
-                )}
-
-                {view === 'verb-result' && (
-                    <div className="bg-white rounded-[3rem] p-12 shadow-xl border-t-8 border-blue-500 text-center transition-all relative overflow-hidden min-h-[400px] flex flex-col justify-center">
-                        <div className="relative z-10">
-                            <h2 className="text-4xl font-black text-blue-900 mb-4">כל הכבוד בצמידות! 🎯</h2>
-                            <p className="text-2xl mb-4">הציון שלך:</p>
-                            <div className="text-8xl font-black text-blue-600 mb-8">{Math.round((verbScore / (verbsData.length * 5)) * 100)}%</div>
-                            <button onClick={() => { setView('learn'); setVerbIndex(0); setExerciseIndex(0); setVerbScore(0); }} className="px-8 py-4 bg-blue-500 text-white rounded-2xl font-bold text-xl hover:bg-blue-600 transition-colors">המשך למידה</button>
-                        </div>
-                    </div>
-                )}
-
-                {view === 'quiz-result' && (
-                    <div className="bg-white rounded-[3rem] p-12 shadow-xl border-t-8 border-fuchsia-500 text-center transition-all relative overflow-hidden min-h-[400px] flex flex-col justify-center">
-                        <div className="relative z-10">
-                            <h2 className="text-4xl font-black text-purple-900 mb-4">כל הכבוד! 🏆</h2>
-                            <p className="text-2xl mb-4">הציון שלך:</p>
-                            <div className="text-8xl font-black text-fuchsia-600 mb-8">{quizScore * 10}%</div>
-                            <button onClick={() => setView('learn')} className="px-8 py-4 bg-fuchsia-500 text-white rounded-2xl font-bold text-xl hover:bg-fuchsia-600 transition-colors">המשך למידה</button>
-                        </div>
-                    </div>
-                )}
-
-                {/* --- MULTI STORY VIEW --- */}
-                {view === 'story' && (
-                    <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border-t-8 border-rose-400 relative transition-all">
-                        <h2 className="text-4xl font-black text-rose-600 mb-6 text-center">{storiesData[storyIndex].title}</h2>
-                        <div className="flex flex-wrap justify-center gap-2 mb-6 text-sm font-bold">
-                            <span className="bg-fuchsia-100 text-fuchsia-800 px-3 py-1 rounded-full">מילים שלמדנו</span>
-                            <span className="bg-rose-100 text-rose-800 px-3 py-1 rounded-full">חיבורים</span>
-                            <span className="bg-pink-100 text-pink-800 px-3 py-1 rounded-full">חדשות</span>
-                        </div>
-                        
-                        <div className="text-xl md:text-2xl leading-loose text-slate-800 bg-rose-50 p-6 md:p-8 rounded-2xl border-2 border-rose-200 shadow-inner" dir="ltr">
-                            {storiesData[storyIndex].content.map((paragraph, idx) => (
-                                <p key={idx} className="mb-4">
-                                    {renderStoryText(paragraph)}
-                                </p>
-                            ))}
-                        </div>
-                        
-                        <div className="flex justify-center gap-4 mt-8 flex-wrap">
-                            <button onClick={() => speakText(storiesData[storyIndex].audio)} className="px-8 py-4 bg-rose-400 text-white rounded-xl font-bold flex items-center gap-2 hover:bg-rose-500 shadow-md transition-colors">
-                                <span>{storyAudioMuted ? '🔇' : '🔊'}</span> {storyAudioMuted ? 'הקשיבי סיפור' : 'השמע סיפור'}
-                            </button>
-                            <button onClick={() => setStoryAudioMuted(!storyAudioMuted)} className="px-8 py-4 bg-white border-2 border-rose-400 text-rose-600 rounded-xl font-bold flex items-center gap-2 hover:bg-rose-50 shadow-sm transition-colors">
-                                <span>{storyAudioMuted ? '🔇' : '🔊'}</span> {storyAudioMuted ? 'הפעלת קול' : 'השתקת קול'}
-                            </button>
-                            <button onClick={() => setStoryIndex(prev => getNextRandom(prev, storiesData.length))} className="px-8 py-4 bg-white border-2 border-rose-400 text-rose-600 rounded-xl font-bold flex items-center gap-2 hover:bg-rose-50 shadow-sm transition-colors">
-                                <span>🎲</span> סיפור אחר
-                            </button>
-                        </div>
-                    </div>
-                )}
-
-                {/* --- READING & VOWEL PATTERNS --- */}
-                {view === 'reading' && (
-                    <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border-t-8 border-pink-400 text-center transition-all">
-                        <h2 className="text-3xl font-black text-pink-800 mb-2">קריאה וניקוד אנגלית 📖</h2>
-                        <p className="text-slate-600 mb-6 font-bold">דוגמה {readingPatternIndex + 1} מתוך {readingPatternsData.length}</p>
-
-                        {/* Pattern name and description */}
-                        <div className="bg-pink-50 p-6 rounded-2xl border-2 border-pink-200 mb-6">
-                            <h3 className="text-2xl font-black text-pink-900 mb-2">{readingPatternsData[readingPatternIndex].pattern}</h3>
-                            <p className="text-lg font-bold text-pink-800 mb-2">{readingPatternsData[readingPatternIndex].sound}</p>
-                            <p className="text-slate-700 font-semibold">{readingPatternsData[readingPatternIndex].hebrew}</p>
-                        </div>
-
-                        {/* Current word */}
-                        {readingPatternsData[readingPatternIndex].words[wordInPatternIndex] && (
-                            <div className="bg-blue-50 p-8 rounded-3xl border-4 border-blue-200 mb-8">
-                                {/* English word */}
-                                <p className="text-5xl font-black text-blue-900 mb-4" dir="ltr">
-                                    {readingPatternsData[readingPatternIndex].words[wordInPatternIndex].word}
-                                </p>
-
-                                {/* Breakdown with colors */}
-                                <p className="text-3xl font-bold text-slate-700 mb-4 tracking-widest" dir="ltr">
-                                    {readingPatternsData[readingPatternIndex].words[wordInPatternIndex].breakdown}
-                                </p>
-
-                                {/* Hebrew translation */}
-                                <p className="text-2xl font-bold text-slate-800 mb-3">
-                                    {readingPatternsData[readingPatternIndex].words[wordInPatternIndex].hebrew}
-                                </p>
-
-                                {/* Note if exists */}
-                                {readingPatternsData[readingPatternIndex].words[wordInPatternIndex].note && (
-                                    <p className="text-lg font-bold text-pink-700 italic">
-                                        💡 {readingPatternsData[readingPatternIndex].words[wordInPatternIndex].note}
-                                    </p>
-                                )}
-                            </div>
-                        )}
-
-                        {/* Buttons */}
-                        <div className="flex flex-col sm:flex-row justify-center gap-4 flex-wrap mb-6">
-                            <button onClick={() => speakText(readingPatternsData[readingPatternIndex].words[wordInPatternIndex].word)} className="px-6 py-3 bg-pink-500 text-white rounded-xl font-bold flex items-center gap-2 hover:bg-pink-600 shadow-md transition-colors">
-                                <span>🔊</span> שמע המילה
-                            </button>
-                            {wordInPatternIndex < readingPatternsData[readingPatternIndex].words.length - 1 ? (
-                                <button onClick={() => setWordInPatternIndex(prev => prev + 1)} className="px-6 py-3 bg-white border-2 border-pink-400 text-pink-600 rounded-xl font-bold flex items-center gap-2 hover:bg-pink-50 shadow-sm transition-colors">
-                                    <span>➡️</span> המילה הבאה
-                                </button>
                             ) : (
-                                <button onClick={() => { setReadingPatternIndex(prev => getNextRandom(prev, readingPatternsData.length)); setWordInPatternIndex(0); }} className="px-6 py-3 bg-white border-2 border-pink-400 text-pink-600 rounded-xl font-bold flex items-center gap-2 hover:bg-pink-50 shadow-sm transition-colors">
-                                    <span>🎲</span> דוגמה הבאה
-                                </button>
+                                <div className="space-y-6">
+                                    <p className="text-xl font-bold text-slate-500">עכשיו תורך! אמרי את המילה באנגלית:</p>
+                                    <button onClick={handleSpeech} className={`w-32 h-32 rounded-full flex items-center justify-center mx-auto shadow-2xl transition-all ${isListening ? 'bg-rose-400 scale-110 animate-pulse' : 'bg-pink-500 text-white text-5xl'}`}>🎤</button>
+                                    {feedback && <p className={`font-bold ${feedback.type === 'success' ? 'text-green-500' : 'text-rose-500'}`}>{feedback.message}</p>}
+                                </div>
                             )}
                         </div>
+                    )}
 
-                        {/* Progress indicator */}
-                        <p className="text-slate-600 font-semibold">מילה {wordInPatternIndex + 1} מתוך {readingPatternsData[readingPatternIndex].words.length}</p>
+                    {/* ⏳ GRAMMAR VIEW */}
+                    {view === 'grammar' && (
+                        <div className="text-center">
+                            <h2 className="text-3xl font-black text-blue-600 mb-8">אתגר הדקדוק (Past Simple)</h2>
+                            <div className="text-3xl font-black mb-10 p-8 bg-blue-50 rounded-2xl border-2 border-blue-100" dir="ltr">{grammarData[grammarIndex].prompt}</div>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                                {grammarData[grammarIndex].options.map((opt, i) => (
+                                    <button key={i} onClick={() => {
+                                        if (i === grammarData[grammarIndex].correct) { playSound('success'); setGrammarSolved(true); triggerAnim('success-check'); }
+                                        else playSound('error');
+                                    }} className="p-6 bg-white border-2 border-blue-200 rounded-2xl font-bold text-xl hover:bg-blue-500 hover:text-white transition-all">{opt}</button>
+                                ))}
+                            </div>
+                            {grammarSolved && (
+                                <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-6 mb-4 animate-in fade-in">
+                                    <p className="text-green-800 font-bold text-lg mb-4">💡 {grammarData[grammarIndex].rule}</p>
+                                    <button onClick={() => { setGrammarIndex((grammarIndex + 1) % grammarData.length); setGrammarSolved(false); }} className="bg-blue-500 text-white px-8 py-2 rounded-xl font-bold">לשאלה הבאה ➜</button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* 🧩 WORD BANK VIEW */}
+                    {view === 'completion' && (
+                        <div className="text-center">
+                            <h2 className="text-3xl font-black text-pink-700 mb-6">מחסן מילים</h2>
+                            <div className="bg-slate-100 p-6 rounded-2xl border-2 border-slate-200 mb-8">
+                                <p className="text-xs font-bold text-slate-400 mb-3 text-right">מחסן מילים:</p>
+                                <div className="flex flex-wrap justify-center gap-2">
+                                    {completionData[compIndex].bank.map((w, i) => (
+                                        <button key={i} onClick={() => {
+                                            if (w === completionData[compIndex].correct) { playSound('success'); triggerAnim('success-check'); setTimeout(() => setCompIndex((compIndex + 1) % completionData.length), 1500); }
+                                            else playSound('error');
+                                        }} className="bg-white border-2 border-pink-200 px-6 py-2 rounded-xl font-bold text-pink-600 hover:bg-pink-500 hover:text-white transition-all">{w}</button>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="text-2xl font-bold p-8 bg-rose-50 rounded-2xl border-2 border-rose-100 leading-loose" dir="ltr">
+                                {completionData[compIndex].sentence.replace('_______', '_____')}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 📚 UNSEEN VIEW */}
+                    {view === 'story' && (
+                        <div>
+                            <h2 className="text-4xl font-black text-center text-orange-600 mb-8">{storiesData[storyIndex].title}</h2>
+                            {storyMode === 'read' ? (
+                                <div className="space-y-8">
+                                    <div className="text-xl md:text-2xl leading-loose bg-orange-50 p-8 rounded-2xl border-2 border-orange-100 shadow-inner" dir="ltr">
+                                        {storiesData[storyIndex].content.map((p, i) => <p key={i} className="mb-4">{renderStoryText(p)}</p>)}
+                                    </div>
+                                    <div className="flex justify-center gap-4">
+                                        <button onClick={() => speak(storiesData[storyIndex].audio)} className="bg-white border-2 border-orange-400 text-orange-600 px-8 py-3 rounded-xl font-bold">🔊 הקרא לי</button>
+                                        <button onClick={() => setStoryMode('questions')} className="bg-orange-500 text-white px-8 py-3 rounded-xl font-bold shadow-lg">📝 התחל שאלות</button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="bg-blue-50 p-8 rounded-2xl border-2 border-blue-200">
+                                    <p className="text-center text-slate-500 font-bold mb-4">שאלה {storyQuestionIndex + 1} מתוך 3</p>
+                                    <h3 className="text-2xl font-black text-center mb-8" dir="ltr">{storiesData[storyIndex].questions[storyQuestionIndex].q}</h3>
+                                    <div className="flex flex-col gap-4 max-w-md mx-auto">
+                                        {storiesData[storyIndex].questions[storyQuestionIndex].options.map((opt, i) => (
+                                            <button key={i} onClick={() => {
+                                                if (i === storiesData[storyIndex].questions[storyQuestionIndex].correct) {
+                                                    playSound('success'); triggerAnim('success-check');
+                                                    if (storyQuestionIndex < 2) setStoryQuestionIndex(prev => prev + 1);
+                                                    else { triggerAnim('confetti'); setView('learn'); }
+                                                } else playSound('error');
+                                            }} className="p-4 bg-white border-2 border-blue-200 rounded-xl font-bold hover:bg-blue-500 hover:text-white transition-all text-center">{opt}</button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* 🏆 QUIZ VIEW */}
+                    {view === 'quiz' && (
+                        <div className="text-center">
+                            <p className="text-slate-400 font-bold mb-4">שאלה {quizIndex + 1} מתוך 10</p>
+                            <h2 className="text-6xl font-black mb-12" dir="ltr">{quizSet[quizIndex].q}</h2>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {quizSet[quizIndex].options.map((opt, i) => (
+                                    <button key={i} onClick={() => {
+                                        const isCorrect = opt === quizSet[quizIndex].correct;
+                                        if (isCorrect) setQuizScore(prev => prev + 1);
+                                        playSound(isCorrect ? 'success' : 'error');
+                                        if (quizIndex < 9) setQuizIndex(prev => prev + 1);
+                                        else { triggerAnim('confetti'); setView('learn'); }
+                                    }} className="p-6 bg-pink-50 border-2 border-pink-100 rounded-2xl font-bold text-xl hover:bg-pink-500 hover:text-white transition-all">{opt}</button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 📖 LIBRARY VIEW */}
+                    {view === 'library' && (
+                        <div>
+                            <h2 className="text-3xl font-black text-center text-rose-500 mb-8">הספריה למבחן 📚</h2>
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-h-[60vh] overflow-y-auto p-2">
+                                {wordsData.map((w, i) => (
+                                    <div key={i} onClick={() => { setActiveWordIndex(i); setView('learn'); setStep(1); }} className={`p-4 rounded-xl border-2 transition-all cursor-pointer ${masteredIndexes.includes(i) ? 'bg-green-50 border-green-200' : 'bg-rose-50 border-rose-100'}`}>
+                                        <p className="font-black" dir="ltr">{w.en}</p>
+                                        <p className="text-sm text-slate-500">{w.he}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 🃏 MATCH VIEW (SKELETON - USES SAME LOGIC) */}
+                    {view === 'analogies' && (
+                         <div className="text-center">
+                             <h2 className="text-3xl font-black text-fuchsia-700 mb-8">אנלוגיות עבר פשוט</h2>
+                             <div className="flex justify-center items-center gap-6 text-3xl font-black bg-pink-50 p-8 rounded-2xl border-2 border-pink-100 mb-10" dir="ltr">
+                                 <span>{analogiesData[analogyIndex].word1}</span>
+                                 <span className="text-pink-300">➜</span>
+                                 <span>{analogiesData[analogyIndex].word2}</span>
+                             </div>
+                             <div className="text-xl text-slate-400 font-bold mb-4">בדיוק כמו ש...</div>
+                             <div className="flex justify-center items-center gap-6 text-3xl font-black bg-fuchsia-50 p-8 rounded-2xl border-4 border-fuchsia-100 mb-10" dir="ltr">
+                                 <span>{analogiesData[analogyIndex].word3}</span>
+                                 <span className="text-fuchsia-300">➜</span>
+                                 <span className="border-b-4 border-fuchsia-400 min-w-[100px]">?</span>
+                             </div>
+                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                                 {analogiesData[analogyIndex].options.map((opt, i) => (
+                                     <button key={i} onClick={() => {
+                                         if (opt === analogiesData[analogyIndex].correct) { playSound('success'); triggerAnim('success-check'); setTimeout(() => setAnalogyIndex((analogyIndex + 1) % analogiesData.length), 1500); }
+                                         else playSound('error');
+                                     }} className="p-4 bg-white border-2 border-fuchsia-200 rounded-xl font-bold hover:bg-fuchsia-500 hover:text-white transition-all">{opt}</button>
+                                 ))}
+                             </div>
+                         </div>
+                    )}
+
+                </main>
+
+                <footer className="mt-8 text-center text-slate-400 font-bold">
+                    <p>התקדמות כללית: {Math.round((masteredIndexes.length / wordsData.length) * 100)}%</p>
+                    <div className="w-full bg-slate-200 h-2 rounded-full mt-2 overflow-hidden">
+                        <div className="bg-pink-400 h-full transition-all duration-1000" style={{ width: `${(masteredIndexes.length / wordsData.length) * 100}%` }}></div>
                     </div>
-                )}
+                </footer>
             </div>
         </div>
     );
-};
-
-export default App;
+}
